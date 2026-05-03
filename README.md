@@ -6,6 +6,32 @@ Dette er en liten pedagogisk repo for å undersøke et enkelt spørsmål:
 
 Modellen er bevisst enkel. Den er laget for å gi intuisjon og størrelsesorden, ikke for å være en full kraftsystemmodell.
 
+
+## Anbefalt leservei
+
+Hvis repoet skal deles med en fagperson, start med dette løpet:
+
+1. Les `PEDAGOGISK_NOTAT.md` først.
+2. Kjør hovednotebooken fra toppen uten å endre parametere.
+3. Endre bare **én parameter**: residual effektmangel.
+4. Endre deretter bare **varighet**.
+5. Først etterpå: endre batterikjemi, kost og produksjonskapasitet.
+
+Grunnen er pedagogisk: kjemi og kost er viktige, men de kommer etter størrelsesordenen `GW × døgn`.
+
+## Femminuttersversjonen
+
+Modellen kan forklares med fire spørsmål:
+
+| Spørsmål | Formel / test | Hva det lærer |
+|---|---|---|
+| Hvor mye energi mangler? | `GW × 24 × døgn / 1000` | Varighet gjør problemet stort |
+| Hvor stort batteri trengs? | `levert TWh / utnyttbar andel` | Reserve, degradering og drift øker installert behov |
+| Hva koster det? | `installert kWh × USD/kWh` | Kapitalbindingen blir synlig |
+| Kan det bygges? | `installert TWh / årlig cellekapasitet` | Forsyningskjeden blir en del av svaret |
+
+Denne rekkefølgen er viktig. Den hindrer at diskusjonen begynner med teknologioptimisme eller teknologipessimisme. Først regnes energimengden. Deretter diskuteres systemmiksen.
+
 ## Hva du kan endre
 
 Notebooken lar deg variere:
@@ -111,6 +137,20 @@ Denne repoen inneholder en `.devcontainer/devcontainer.json` som gjør oppsettet
 
 Codespaces kan også åpnes i JupyterLab, men for nybegynnere er VS Code i nettleseren ofte best fordi du ser både filer, terminal, notebook og Git-status på ett sted.
 
+
+## For faglig vurdering
+
+Repoet er skrevet for å være mulig å angripe. De viktigste antakelsene ligger i `data/defaults.json`, og `ASSUMPTIONS.md` skiller kildeverdier fra modellantakelser. `PEDAGOGISK_NOTAT.md` oppsummerer hva modellen viser, hva den ikke viser, og hvilke spørsmål som er mest relevante å diskutere.
+
+En nyttig faglig kritikk bør derfor helst endre én av disse:
+
+- residual effektmangel under hendelsen
+- varighet og sannsynlighet for hendelsen
+- tilgjengelig regulerbar produksjon og fleksibilitet
+- relevant batterikost for multi-døgn lagring
+- forsyningskjede og produksjonstakt for valgt kjemi
+- alternativverdien av samme kapital i nett, vannkraft, termisk/kjemisk reserve eller etterspørselsrespons
+
 ## Repo-struktur
 
 ```text
@@ -183,7 +223,7 @@ Modellen ignorerer blant annet:
 - omløpshastighet og inntektsmodell for sjelden brukt lager
 - lokal arealbruk, brannvern, trafostasjoner, nettilknytning og tillatelser
 
-Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hvis den ikke er det, bør en mer detaljert modell brukes til å finne god systemmiks, ikke til å redde en dårlig premiss.
+Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hvis størrelsesordenen ikke er plausibel, bør en mer detaljert modell brukes til å finne en bedre systemmiks, ikke til å forsvare én bestemt teknologi.
 
 ## Ordliste
 
