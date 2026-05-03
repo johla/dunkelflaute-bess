@@ -150,6 +150,10 @@ Modellen ignorerer blant annet:
 
 Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hvis den ikke er det, bør en mer detaljert modell brukes til å finne god systemmiks, ikke til å redde en dårlig premiss.
 
+## Ordliste
+
+Termer, forkortelser og enheter som brukes i notebookene er forklart i [`ORDLISTE.md`](ORDLISTE.md). Den er skrevet for nysgjerrige lesere uten dyp energibakgrunn.
+
 ## Kildegrunnlag
 
 Se `data/defaults.json` for kildeliste med lenker.
