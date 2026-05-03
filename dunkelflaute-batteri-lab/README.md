@@ -133,3 +133,7 @@ Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hv
 ## Kildegrunnlag
 
 Se `data/defaults.json` for kildeliste med lenker.
+## Lisens
+
+Dette arbeidet er lisensiert under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
+
