@@ -135,6 +135,10 @@ Codespaces kan også åpnes i JupyterLab, men for nybegynnere er VS Code i nettl
     └── dunkelflaute.py
 ```
 
+## Hovednotebook
+
+Start her hvis du er ny i repoet: [`notebooks/dunkelflaute_batteri_lab.ipynb`](notebooks/dunkelflaute_batteri_lab.ipynb). Den gir den enkle grunnmodellen, standardverdiene og hovedresultatene før du eventuelt går videre til utvidelsene under.
+
 ## Naturlige utvidelser
 
 Hovednotebooken er bevisst enkel. Hver av de pedagogiske begrensningene er løftet til en egen, kjørbar notebook under [`notebooks/extensions/`](notebooks/extensions):
