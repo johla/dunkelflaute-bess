@@ -22,6 +22,15 @@
     "committed_global_cell_capacity_twh_2030": 6.5,
     "eu_bess_additions_gwh_2025": 27.1
   },
+  "norwegian_anchors": {
+    "household_kwh_per_year_2024": 14700.0,
+    "bergen_twh_per_year_2024": 3.4898,
+    "oslo_twh_per_year_2024": 8.7589,
+    "statkraft_norway_twh_per_year_2025": 51.2,
+    "norway_consumption_including_losses_twh_2025": 139.2,
+    "norway_production_twh_2025": 162.0,
+    "norway_hydro_reservoir_capacity_twh": 87.0
+  },
   "sources": [
     {
       "name": "Ember, European Electricity Review 2026",
@@ -62,6 +71,31 @@
       "name": "IEA, Sodium-ion battery momentum grows, but challenges remain",
       "used_for": "Natrium-ion som mulig diversifisering, men svært Kina-konsentrert pipeline",
       "url": "https://www.iea.org/commentaries/sodium-ion-battery-momentum-grows-but-challenges-remain"
+    },
+    {
+      "name": "SSB tabell 14490",
+      "used_for": "Oslo og Bergen kommunes strømforbruk i 2024",
+      "url": "https://www.ssb.no/statbank/table/14490/"
+    },
+    {
+      "name": "SSB, strømforbruk i husholdninger",
+      "used_for": "Gjennomsnittlig norsk husholdningsforbruk rundt 14 700 kWh/år i 2024",
+      "url": "https://www.ssb.no/energi-og-industri/energi/statistikk/elektrisitet"
+    },
+    {
+      "name": "Statkraft årsrapport 2025",
+      "used_for": "Statkrafts produksjon i Norge, 51,2 TWh",
+      "url": "https://www.statkraft.no/"
+    },
+    {
+      "name": "Statnett, kraftsystemdata 2025",
+      "used_for": "Norsk strømproduksjon og forbruk inkl. tap i 2025",
+      "url": "https://www.statnett.no/"
+    },
+    {
+      "name": "NVE Energifakta Norge",
+      "used_for": "Norsk vannkrafts magasinkapasitet, rundt 87 TWh",
+      "url": "https://energifaktanorge.no/"
     }
   ]
 }

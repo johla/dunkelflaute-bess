@@ -31,6 +31,12 @@ Hvor mye energi som overføres per tidsenhet. Et kraftverk på 1 GW kan levere 1
 **Energi** *(energy)* — målt i **Wh, kWh, MWh, GWh, TWh**
 Mengden energi over tid. 1 GW i 1 time = 1 GWh. 1 GW i ett år ≈ 8 760 GWh ≈ 8,76 TWh.
 
+**Oslo-år** *(pedagogisk normalisering)*
+SSBs 2024-tall for Oslo er 8 758,9 GWh strømforbruk, altså praktisk talt 1 GW i gjennomsnitt gjennom et helt år. Ett Oslo-år betyr derfor ca. 8,76 TWh. Dette gjør det lettere å lese store TWh-tall: 75 TWh er rundt 8,6 Oslo-år.
+
+**GW-år**
+Energi levert av en konstant effekt gjennom ett år. 1 GW-år = 1 GW × 8 760 timer = 8,76 TWh. Det er nesten identisk med ett Oslo-år.
+
 **Effektkapasitet vs. energikapasitet**
 Et batteri har **to** uavhengige størrelser: hvor stor effekt det kan trekke til/fra (GW), og hvor mye energi det rommer (GWh). Forholdet $E/P$ kalles *varighet* og oppgis i timer.
 
