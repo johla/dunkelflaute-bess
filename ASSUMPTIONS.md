@@ -11,6 +11,9 @@ Dette notatet er kortversjonen av `data/defaults.json`.
 - Litium: USGS oppgir ca. 290 000 tonn global litiumproduksjon i 2025, ekskl. USA.
 - LFP-litiumintensitet: ICCT bruker 0,09 kg litium per kWh LFP-cellekapasitet.
 - Natrium-ion: IEA vurderer natrium-ion som lovende for diversifisering, men dagens og annonserte kapasitet er sterkt konsentrert i Kina.
+- Oslo-år-normalisering: SSB tabell 14490 oppgir Oslo kommunes strømforbruk i 2024 til 8 758,9 GWh, praktisk talt 1 GW i årssnitt.
+- Norske ankre: SSB oppgir norsk husholdning rundt 14 700 kWh/år i 2024, Bergen kommune 3 489,8 GWh i 2024, Statkraft Norge 51,2 TWh produksjon i 2025, og Statnett rundt 139,2 TWh forbruk inkl. tap samt 162 TWh produksjon i 2025.
+- NVE/Energifakta oppgir rundt 87 TWh magasinkapasitet i norsk vannkraftsystem. Det er energimengde, ikke en garanti for ubegrenset effekt, fri geografisk flyt eller tilgjengelighet i alle timer.
 
 ## Modellantakelser
 

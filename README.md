@@ -27,6 +27,37 @@ Spørsmålet her er snevrere: **er batterier alene en rasjonell løsning for kon
 
 Standardverdiene peker mot svaret: sannsynligvis nei. Når hendelsen går fra timer til flere døgn, flytter problemet seg fra vanlig BESS til strategisk energilager, fleksibilitet, overføringsnett, regulerbar produksjon, vannmagasiner, hydrogen/metan/ammoniakk, termisk backup og etterspørselsstyring.
 
+## Energi og effekt
+
+Effekt er fart. Energi er mengde.
+
+En panelovn på 1 kW som står på i én time bruker 1 kWh. Den samme ovnen som står på i 10 timer bruker 10 kWh.
+
+Formel:
+
+```text
+energi = effekt × tid
+```
+
+Derfor er det ikke nok å si at vi trenger «mer GW» eller «mer TWh». GW handler om kapasitet i øyeblikket. TWh handler om energimengde over tid.
+
+En nyttig norsk huskeregel:
+
+**Oslo bruker omtrent 1 GW i gjennomsnitt gjennom året.** Dermed er 1 GW-år omtrent ett Oslo-år, altså ca. 8,76 TWh.
+
+Notebookene bruker derfor **Oslo-år** som felles normalisering:
+
+| Referanse | Årlig energi | Gjennomsnittlig effekt | Oslo-år |
+|---|---:|---:|---:|
+| Norsk husholdning | 14 700 kWh/år | 1,68 kW | 0,00000168 |
+| Bergen kommune | 3,49 TWh/år | 398 MW | 0,40 |
+| Oslo kommune | 8,76 TWh/år | 1,00 GW | 1,00 |
+| Statkraft Norge | 51,2 TWh/år | 5,84 GW | 5,85 |
+| Norge, strømforbruk inkl. tap | 139,2 TWh/år | 15,9 GW | 15,9 |
+| Norge, strømproduksjon | ca. 162 TWh/år | 18,5 GW | 18,5 |
+
+Viktig nyanse: ikke bruk disse ankrene til å late som energi er fullt flyttbar. Kraftsystemet trenger også effektkapasitet, varighet, geografisk plassering, regulerbarhet, sesongprofil og nett.
+
 ## Installer og kjør
 
 ```bash
@@ -160,4 +191,3 @@ Se `data/defaults.json` for kildeliste med lenker.
 ## Lisens
 
 Dette arbeidet er lisensiert under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
-
