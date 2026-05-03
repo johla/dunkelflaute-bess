@@ -1,0 +1,300 @@
+Only in dunkelflaute-bess-pedagogisk: PATCH_NOTES.md
+Only in dunkelflaute-bess-pedagogisk: PEDAGOGISK_NOTAT.md
+diff -ru '--exclude=*.pyc' dunkel_work/dunkelflaute-bess-main/README.md dunkelflaute-bess-pedagogisk/README.md
+--- dunkel_work/dunkelflaute-bess-main/README.md	2026-05-03 22:11:53.000000000 +0000
++++ dunkelflaute-bess-pedagogisk/README.md	2026-05-03 22:36:26.721083333 +0000
+@@ -6,6 +6,32 @@
+ 
+ Modellen er bevisst enkel. Den er laget for å gi intuisjon og størrelsesorden, ikke for å være en full kraftsystemmodell.
+ 
++
++## Anbefalt leservei
++
++Hvis repoet skal deles med en fagperson, start med dette løpet:
++
++1. Les `PEDAGOGISK_NOTAT.md` først.
++2. Kjør hovednotebooken fra toppen uten å endre parametere.
++3. Endre bare **én parameter**: residual effektmangel.
++4. Endre deretter bare **varighet**.
++5. Først etterpå: endre batterikjemi, kost og produksjonskapasitet.
++
++Grunnen er pedagogisk: kjemi og kost er viktige, men de kommer etter størrelsesordenen `GW × døgn`.
++
++## Femminuttersversjonen
++
++Modellen kan forklares med fire spørsmål:
++
++| Spørsmål | Formel / test | Hva det lærer |
++|---|---|---|
++| Hvor mye energi mangler? | `GW × 24 × døgn / 1000` | Varighet gjør problemet stort |
++| Hvor stort batteri trengs? | `levert TWh / utnyttbar andel` | Reserve, degradering og drift øker installert behov |
++| Hva koster det? | `installert kWh × USD/kWh` | Kapitalbindingen blir synlig |
++| Kan det bygges? | `installert TWh / årlig cellekapasitet` | Forsyningskjeden blir en del av svaret |
++
++Denne rekkefølgen er viktig. Den hindrer at diskusjonen begynner med teknologioptimisme eller teknologipessimisme. Først regnes energimengden. Deretter diskuteres systemmiksen.
++
+ ## Hva du kan endre
+ 
+ Notebooken lar deg variere:
+@@ -111,6 +137,20 @@
+ 
+ Codespaces kan også åpnes i JupyterLab, men for nybegynnere er VS Code i nettleseren ofte best fordi du ser både filer, terminal, notebook og Git-status på ett sted.
+ 
++
++## For faglig vurdering
++
++Repoet er skrevet for å være mulig å angripe. De viktigste antakelsene ligger i `data/defaults.json`, og `ASSUMPTIONS.md` skiller kildeverdier fra modellantakelser. `PEDAGOGISK_NOTAT.md` oppsummerer hva modellen viser, hva den ikke viser, og hvilke spørsmål som er mest relevante å diskutere.
++
++En nyttig faglig kritikk bør derfor helst endre én av disse:
++
++- residual effektmangel under hendelsen
++- varighet og sannsynlighet for hendelsen
++- tilgjengelig regulerbar produksjon og fleksibilitet
++- relevant batterikost for multi-døgn lagring
++- forsyningskjede og produksjonstakt for valgt kjemi
++- alternativverdien av samme kapital i nett, vannkraft, termisk/kjemisk reserve eller etterspørselsrespons
++
+ ## Repo-struktur
+ 
+ ```text
+@@ -183,7 +223,7 @@
+ - omløpshastighet og inntektsmodell for sjelden brukt lager
+ - lokal arealbruk, brannvern, trafostasjoner, nettilknytning og tillatelser
+ 
+-Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hvis den ikke er det, bør en mer detaljert modell brukes til å finne god systemmiks, ikke til å redde en dårlig premiss.
++Dette er med vilje. Første spørsmål er om størrelsesordenen er plausibel. Hvis størrelsesordenen ikke er plausibel, bør en mer detaljert modell brukes til å finne en bedre systemmiks, ikke til å forsvare én bestemt teknologi.
+ 
+ ## Ordliste
+ 
+Only in dunkelflaute-bess-pedagogisk: docs
+diff -ru '--exclude=*.pyc' dunkel_work/dunkelflaute-bess-main/notebooks/dunkelflaute_batteri_lab.ipynb dunkelflaute-bess-pedagogisk/notebooks/dunkelflaute_batteri_lab.ipynb
+--- dunkel_work/dunkelflaute-bess-main/notebooks/dunkelflaute_batteri_lab.ipynb	2026-05-03 22:11:53.000000000 +0000
++++ dunkelflaute-bess-pedagogisk/notebooks/dunkelflaute_batteri_lab.ipynb	2026-05-03 22:37:03.603302400 +0000
+@@ -21,6 +21,23 @@
+   },
+   {
+    "cell_type": "markdown",
++   "id": "6a689aba",
++   "metadata": {},
++   "source": [
++    "## Læringsmål\n",
++    "\n",
++    "Etter å ha kjørt notebooken skal leseren kunne gjøre fire ting:\n",
++    "\n",
++    "1. regne om fra **GW × døgn** til **TWh** uten å blande effekt og energi\n",
++    "2. forklare hvorfor flerdagers energireserve er en annen problemklasse enn vanlig BESS\n",
++    "3. teste hvordan konklusjonen flytter seg når residual effektmangel, varighet og utnyttbar kapasitet endres\n",
++    "4. skille mellom det natrium-ion kan forbedre, og det kjemien ikke kan endre\n",
++    "\n",
++    "Les gjerne notebooken som en jakt på bruddpunktet: Når går batterier fra rasjonell korttidsfleksibilitet til lite plausibel strategisk energireserve?\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
+    "id": "64c79735",
+    "metadata": {},
+    "source": [
+@@ -128,8 +145,10 @@
+   },
+   {
+    "cell_type": "code",
++   "execution_count": null,
+    "id": "811cabbb",
+    "metadata": {},
++   "outputs": [],
+    "source": [
+     "HOURS_PER_YEAR = 8760\n",
+     "\n",
+@@ -205,9 +224,7 @@
+     "\n",
+     "display(anchor_table)\n",
+     "pd.DataFrame([describe_energy(75)], index=[\"75 TWh batteripark\"])\n"
+-   ],
+-   "outputs": [],
+-   "execution_count": null
++   ]
+   },
+   {
+    "cell_type": "code",
+@@ -335,6 +352,52 @@
+   },
+   {
+    "cell_type": "markdown",
++   "id": "2cf2d5a2",
++   "metadata": {},
++   "source": [
++    "## Mini-eksempel før Europa\n",
++    "\n",
++    "Før vi bruker europeiske tall, skaler én enkel mangel:\n",
++    "\n",
++    "> 1 GW residual effektmangel i 10 døgn, med 80 % utnyttbar batterikapasitet.\n",
++    "\n",
++    "Dette er pedagogisk nyttig fordi 1 GW omtrent tilsvarer Oslos gjennomsnittlige effektbruk. Hvis denne lille versjonen allerede blir stor, vet vi at Europaversjonen må behandles som systemarkitektur, ikke bare produktvalg.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "id": "ee0af665",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "toy = calculate(residual_gap_gw=1, event_days=10, usable_fraction=0.80)\n",
++    "\n",
++    "mini = pd.DataFrame([\n",
++    "    {\n",
++    "        \"Scenario\": \"1 GW i 10 døgn\",\n",
++    "        \"Levert energi (TWh)\": toy[\"delivered_energy_twh\"],\n",
++    "        \"Installert batteri (TWh)\": toy[\"installed_battery_twh\"],\n",
++    "        \"Installert Oslo-døgn\": toy[\"installed_oslo_years\"] * 365,\n",
++    "        \"Turnkey kost (mrd. USD)\": toy[\"turnkey_cost_trillion_usd\"] * 1000,\n",
++    "    }\n",
++    "])\n",
++    "\n",
++    "display(mini)\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "a59b76e3",
++   "metadata": {},
++   "source": [
++    "**Kontrollpunkt:** Hvis 1 GW i 10 døgn krever omtrent 0,30 TWh installert kapasitet, hva skjer når tallet ikke er 1 GW, men 250 GW?\n",
++    "\n",
++    "Det er hele pedagogikken i én multiplikasjon.\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
+    "id": "f5590ffb",
+    "metadata": {},
+    "source": [
+@@ -924,6 +987,51 @@
+   },
+   {
+    "cell_type": "markdown",
++   "id": "ce77ab1d",
++   "metadata": {},
++   "source": [
++    "## Regimekart: når skifter problemklassen?\n",
++    "\n",
++    "Tabellen under er ikke en fasit. Den er en lesestøtte. Den klassifiserer installert batterikapasitet etter størrelsesorden:\n",
++    "\n",
++    "- under 1 TWh: stor, men innenfor en utvidet BESS-diskusjon\n",
++    "- 1–10 TWh: kontinentalt lagerprogram\n",
++    "- 10–50 TWh: industriell mobilisering\n",
++    "- over 50 TWh: strategisk energireserve på systemnivå\n",
++    "\n",
++    "Dette gjør det lettere å se når debatten bør flyttes fra batteriprodukt til kraftsystemdesign.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "id": "5384c2d8",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "def regime_label(twh):\n",
++    "    if twh < 1:\n",
++    "        return \"BESS-skala\"\n",
++    "    if twh < 10:\n",
++    "        return \"kontinentalt lagerprogram\"\n",
++    "    if twh < 50:\n",
++    "        return \"industriell mobilisering\"\n",
++    "    return \"strategisk energireserve\"\n",
++    "\n",
++    "regime = pivot.map(regime_label)\n",
++    "regime\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "58790909",
++   "metadata": {},
++   "source": [
++    "**Kontrollpunkt:** Hvis et scenario havner i «strategisk energireserve», bør neste modell ikke bare spørre om billigere batterier. Den bør spørre hvilken kombinasjon av nett, vannkraft, regulerbar produksjon, fleksibelt forbruk og kjemisk/termisk lager som reduserer residualgapet før batterier dimensjoneres.\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
+    "id": "324a7aef",
+    "metadata": {},
+    "source": [
+@@ -1288,6 +1396,67 @@
+   },
+   {
+    "cell_type": "markdown",
++   "id": "355a19f8",
++   "metadata": {},
++   "source": [
++    "## Falsifikasjon: hva måtte endres for at batteri-caset skulle bli sterkt?\n",
++    "\n",
++    "En god pedagogisk modell bør kunne angripes. Tabellen under viser hvilke antakelser som faktisk kan endre konklusjonen.\n"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "id": "fc2b53ac",
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "falsification = pd.DataFrame([\n",
++    "    {\n",
++    "        \"Antakelse som endres\": \"Residual gap faller kraftig\",\n",
++    "        \"Eksempel\": \"250 GW → 50 GW\",\n",
++    "        \"Effekt\": \"Batteribehovet faller lineært\",\n",
++    "        \"Hva må være sant?\": \"Mye regulerbar produksjon, fleksibel last, import eller lagring utenfor batterier virker samtidig\",\n",
++    "    },\n",
++    "    {\n",
++    "        \"Antakelse som endres\": \"Varigheten blir kort\",\n",
++    "        \"Eksempel\": \"10 døgn → 12 timer\",\n",
++    "        \"Effekt\": \"Problemet flyttes tilbake mot vanlig BESS\",\n",
++    "        \"Hva må være sant?\": \"Dunkelflaute-hendelsen er kort eller systemet tåler lengre knapphet på annen måte\",\n",
++    "    },\n",
++    "    {\n",
++    "        \"Antakelse som endres\": \"Samme batterier brukes ofte resten av året\",\n",
++    "        \"Eksempel\": \"Sjelden reserve → høy årlig syklustelling\",\n",
++    "        \"Effekt\": \"Kost per levert MWh kan bli langt lavere\",\n",
++    "        \"Hva må være sant?\": \"Markedet gir nok lønnsomme sykluser uten å tømme lageret før krisen\",\n",
++    "    },\n",
++    "    {\n",
++    "        \"Antakelse som endres\": \"Ikke-litium-kjemier skalerer raskt\",\n",
++    "        \"Eksempel\": \"Stor andel Na-ion / flow / jern / sink\",\n",
++    "        \"Effekt\": \"Materialrisiko kan falle\",\n",
++    "        \"Hva må være sant?\": \"Kost, levetid, sikkerhet, produksjonstakt og bankbarhet er dokumentert i TWh-skala\",\n",
++    "    },\n",
++    "    {\n",
++    "        \"Antakelse som endres\": \"Batterikost faller dramatisk\",\n",
++    "        \"Eksempel\": \"117 → 30 USD/kWh turnkey\",\n",
++    "        \"Effekt\": \"Kapitalbehov faller, men TWh og nettilknytning står igjen\",\n",
++    "        \"Hva må være sant?\": \"Hele installert systemkost faller, ikke bare cellene\",\n",
++    "    },\n",
++    "])\n",
++    "\n",
++    "display(falsification)\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
++   "id": "bcb25d26",
++   "metadata": {},
++   "source": [
++    "Legg merke til asymmetrien: billigere eller annerledes batterier hjelper, men de endrer ikke `GW × døgn`. Det som virkelig flytter størrelsesordenen er lavere residualgap, kortere varighet eller andre energilagre/produksjonslag som tar deler av hendelsen.\n"
++   ]
++  },
++  {
++   "cell_type": "markdown",
+    "id": "8c2fcf4e",
+    "metadata": {},
+    "source": [
+@@ -1302,7 +1471,7 @@
+     "- **flere døgn:** batterier blir fort svært kapital- og materialkrevende\n",
+     "- **uker–sesong:** dette ligner mer på strategisk energilager, regulerbar produksjon og kjemiske/termiske lagre enn vanlig BESS\n",
+     "\n",
+-    "Hvis en påstand sier at «natrium-batterier tilgjengelig i dag løser Dunkelflaute», er denne modellen en måte å teste den på. Ikke ved retorikk, men ved TWh, kroner, produksjonskapasitet og materialflyt."
++    "Hvis en påstand sier at «natrium-batterier tilgjengelig i dag løser Dunkelflaute», er denne modellen en måte å teste påstanden på. Ikke ved retorikk, men ved TWh, kapitalbinding, produksjonskapasitet og materialflyt."
+    ]
+   },
+   {
