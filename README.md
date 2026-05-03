@@ -83,7 +83,7 @@ Codespaces kan også åpnes i JupyterLab, men for nybegynnere er VS Code i nettl
 ## Repo-struktur
 
 ```text
-dunkelflaute-batteri-lab/
+.
 ├── README.md
 ├── requirements.txt
 ├── .devcontainer/
@@ -91,10 +91,30 @@ dunkelflaute-batteri-lab/
 ├── data/
 │   └── defaults.json
 ├── notebooks/
-│   └── dunkelflaute_batteri_lab.ipynb
+│   ├── dunkelflaute_batteri_lab.ipynb
+│   └── extensions/
+│       ├── 01_timeprofiler.ipynb
+│       ├── 02_effekt_vs_energi.ipynb
+│       ├── 03_vannmagasin_pumpekraft.ipynb
+│       ├── 04_andre_teknologier.ipynb
+│       ├── 05_ladevindu.ipynb
+│       ├── 06_overforing_regioner.ipynb
+│       └── 07_levetidskost_per_mwh.ipynb
 └── src/
     └── dunkelflaute.py
 ```
+
+## Naturlige utvidelser
+
+Hovednotebooken er bevisst enkel. Hver av de pedagogiske begrensningene er løftet til en egen, kjørbar notebook under [`notebooks/extensions/`](notebooks/extensions):
+
+1. [`01_timeprofiler.ipynb`](notebooks/extensions/01_timeprofiler.ipynb) — timeprofiler for last, vind og sol.
+2. [`02_effekt_vs_energi.ipynb`](notebooks/extensions/02_effekt_vs_energi.ipynb) — skille effektkapasitet (GW) fra energikapasitet (GWh/TWh).
+3. [`03_vannmagasin_pumpekraft.ipynb`](notebooks/extensions/03_vannmagasin_pumpekraft.ipynb) — eksisterende vannmagasin og pumpekraft.
+4. [`04_andre_teknologier.ipynb`](notebooks/extensions/04_andre_teknologier.ipynb) — kjernekraft, gass+CCS, hydrogen, ammoniakk, syntetisk metan som separate lag.
+5. [`05_ladevindu.ipynb`](notebooks/extensions/05_ladevindu.ipynb) — modellér ladevinduet før/etter hendelsen.
+6. [`06_overforing_regioner.ipynb`](notebooks/extensions/06_overforing_regioner.ipynb) — land/regioner og overføringsbegrensninger.
+7. [`07_levetidskost_per_mwh.ipynb`](notebooks/extensions/07_levetidskost_per_mwh.ipynb) — levetidskost per faktisk levert MWh for sjeldne hendelser.
 
 ## Standardverdier
 
