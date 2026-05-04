@@ -18,10 +18,10 @@ Etter å ha gjennomgått opplegget skal en deltaker kunne:
 
 Før samlingen bør deltakerne ha:
 
-- lest `README.md` (særlig avsnittene «Anbefalt leservei» og «Femminuttersversjonen»)
-- lest `PEDAGOGISK_NOTAT.md`
+- lest [`README.md`](../README.md) (særlig avsnittene «Anbefalt leservei» og «Femminuttersversjonen»)
+- lest [`METODE.md`](../METODE.md)
 - åpnet `data/defaults.json` og bladd gjennom verdiene
-- bladd i `ORDLISTE.md` for termer som er ukjente
+- bladd i [`ORDLISTE.md`](../ORDLISTE.md) for termer som er ukjente
 
 Det er ikke nødvendig å ha kjørt notebooken på forhånd. Det gjøres i opplegget.
 
@@ -52,7 +52,7 @@ Opplegget kan kjøres som én sammenhengende økt på omtrent to timer, eller de
 
 - Gå gjennom falsifikasjonstabellen i hovednotebooken.
 - La deltakerne foreslå én antakelse de mener er svakest, og prøv å endre den i koden.
-- Knytt diskusjonen til `ASSUMPTIONS.md` og skillet mellom kildeverdier og modellantakelser.
+- Knytt diskusjonen til [`ASSUMPTIONS.md`](../ASSUMPTIONS.md) og skillet mellom kildeverdier og modellantakelser.
 
 ### Del 5 — Utvidelser (valgfritt, ca. 20 min)
 
@@ -84,4 +84,4 @@ Hvis opplegget brukes i et kurs, kan deltakerne for eksempel bli bedt om å:
 
 ## Praktisk om kjøring
 
-Repoet kjører i Codespaces eller lokalt. Se `README.md` for installasjon. Anbefalt rekkefølge er hovednotebooken først, deretter utvidelser etter behov.
+Repoet kjører i Codespaces eller lokalt. Se [`getting_started.md`](../getting_started.md) for installasjon. Anbefalt rekkefølge er hovednotebooken først, deretter utvidelser etter behov.
