@@ -1,15 +1,15 @@
 # Dunkelflaute batteri-lab
 
-Dette er en liten pedagogisk repo for å undersøke et enkelt spørsmål:
+Dette prosjekt er en liten pedagogisk øvelse for å undersøke et enkelt spørsmål:
 
-> Hvor stor batteripark måtte Europa ha dersom batterier skulle dekke en flerdagers Dunkelflaute?
+> Hvor stor batteripark måtte Europa ha dersom batterier skulle dekke en (flerdagers) Dunkelflaute?
 
-Modellen er bevisst enkel. Den er laget for å gi intuisjon og størrelsesorden, ikke for å være en full kraftsystemmodell.
+Modellen er bevisst enkel. Den er laget for å gi intuisjon og størrelsesorden, ikke for å være en full kraftsystemmodell. I Norge pågår for tiden debatter mellom aktører hvor tall og scenarios tegnes, faktiske tall og modeller kunne bidratt til å gi et realistisk bilde utifra ulike forutsettninger. 
 
 
 ## Anbefalt leservei
 
-Hvis repoet skal deles med en fagperson, start med dette løpet:
+Hvis repoet skal deles med/brukes av en fagperson, start med dette løpet:
 
 1. Les `PEDAGOGISK_NOTAT.md` først.
 2. Kjør hovednotebooken fra toppen uten å endre parametere.
