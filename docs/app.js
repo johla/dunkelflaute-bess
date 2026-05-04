@@ -185,6 +185,11 @@ function renderResults(r) {
   setText("r-cell-years", `${fmt(r.years_of_global_cell_capacity)}`);
   setText("r-eu-mult", `${fmtInt(r.multiples_of_2025_eu_bess_additions)}×`);
   setText("r-lithium", `${fmt(r.lithium_required_million_tonnes)}`);
+  setText("f-installed", `${fmt(r.installed_twh)} TWh`);
+  setText("f-delivered", `${fmt(r.delivered_twh)} TWh`);
+  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd)} bn USD`);
+  setText("f-cell-years", `${fmt(r.years_of_global_cell_capacity)} år`);
+  setText("f-lithium", `${fmt(r.lithium_required_million_tonnes)} Mt`);
   renderAdvancedImpacts(r);
 }
 
