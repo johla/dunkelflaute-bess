@@ -551,6 +551,44 @@ function wireSliders() {
   });
 }
 
+function setActiveNav(sectionId) {
+  document.querySelectorAll(".topbar nav a").forEach((link) => {
+    const isCurrent = link.getAttribute("href") === `#${sectionId}`;
+    if (isCurrent) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+function wireNavReflection() {
+  const navTargets = [...document.querySelectorAll(".topbar nav a")]
+    .map((link) => link.getAttribute("href"))
+    .filter((href) => href && href.startsWith("#"))
+    .map((href) => document.querySelector(href))
+    .filter(Boolean);
+
+  document.querySelectorAll(".topbar nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      const href = link.getAttribute("href");
+      if (href && href.startsWith("#")) setActiveNav(href.slice(1));
+    });
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveNav(visible.target.id);
+    },
+    { rootMargin: "-25% 0px -55% 0px", threshold: [0.1, 0.35, 0.6] }
+  );
+  navTargets.forEach((section) => observer.observe(section));
+}
+
 // ---------- Bootstrap ----------
 
 async function loadJson(path) {
@@ -594,6 +632,7 @@ async function init() {
   renderScenarioButtons();
   renderAttacks();
   renderGlossary();
+  wireNavReflection();
   markActiveScenario("base");
   recalc();
 }

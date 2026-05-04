@@ -169,6 +169,10 @@ p { margin: 0 0 var(--sp-md) 0; }
   border: 0;
 }
 .topbar nav a:hover { color: var(--ink); }
+.topbar nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom: 2px solid var(--energy-blue);
+}
 
 /* Hero */
 .hero {
