@@ -500,6 +500,12 @@ details.advanced > .advanced-body { margin-top: var(--sp-md); }
   padding: var(--sp-md) var(--sp-lg);
 }
 .attack-card .label { margin-bottom: var(--sp-xs); }
+.attack-card .metric-name {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: var(--sp-xs);
+}
 .attack-card .delta {
   font-size: 1.4rem;
   font-weight: 740;

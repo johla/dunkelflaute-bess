@@ -403,8 +403,8 @@ function renderAttackResults() {
   const cards = SCENARIOS.attacks.map((a) => {
     const patched = applyPatch(baselineState, a.patch);
     const result = calculateScenario(patched);
-    const delta =
-      (result.installed_twh - baseline.installed_twh) / baseline.installed_twh;
+    const metric = attackMetric(a, baseline, result);
+    const delta = (metric.after - metric.before) / metric.before;
     let cls = "flat";
     if (delta > 0.02) cls = "up";
     else if (delta < -0.02) cls = "down";
@@ -412,14 +412,49 @@ function renderAttackResults() {
     return `
       <div class="attack-card" data-attack-card="${a.id}">
         <div class="label">${escapeHtml(a.label)}</div>
+        <div class="metric-name">${escapeHtml(metric.name)}</div>
         <div class="delta ${cls}">${sign}${fmt(delta * 100)} %</div>
         <div class="interp">
-          ${fmt(baseline.installed_twh)} → <strong>${fmt(result.installed_twh)} TWh</strong> installert
+          ${fmt(metric.before)} → <strong>${fmt(metric.after)} ${metric.unit}</strong>
         </div>
         <p class="interp">${escapeHtml(a.description)}</p>
       </div>`;
   });
   $("attack-results").innerHTML = cards.join("");
+}
+
+function attackMetric(a, baseline, result) {
+  const patchKeys = Object.keys(a.patch || {});
+  if (patchKeys.some((key) => key.includes("turnkey_bess_cost_usd_per_kwh"))) {
+    return {
+      name: "Turnkey kost",
+      before: baseline.turnkey_cost_trillion_usd,
+      after: result.turnkey_cost_trillion_usd,
+      unit: "billioner USD"
+    };
+  }
+  if (patchKeys.some((key) => key.includes("global_battery_cell_manufacturing_capacity"))) {
+    return {
+      name: "År av global cellekapasitet",
+      before: baseline.years_of_global_cell_capacity,
+      after: result.years_of_global_cell_capacity,
+      unit: "år"
+    };
+  }
+  if (patchKeys.some((key) => key.includes("lfp_share") || key.includes("sodium_ion_share") || key.includes("other_long_duration_share"))) {
+    return {
+      name: "Litiumbehov",
+      before: baseline.lithium_required_million_tonnes,
+      after: result.lithium_required_million_tonnes,
+      unit: "millioner tonn"
+    };
+  }
+  return {
+    name: "Installert batteri",
+    before: baseline.installed_twh,
+    after: result.installed_twh,
+    unit: "TWh"
+  };
 }
 
 function applyPatch(base, patch) {
