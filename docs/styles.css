@@ -252,14 +252,12 @@ p { margin: 0 0 var(--sp-md) 0; }
 /* Calculator */
 .calc {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--sp-xl);
   align-items: start;
 }
-@media (max-width: 880px) {
-  .calc { grid-template-columns: 1fr; }
-}
 .calc-panel {
+  min-width: 0;
   background-color: var(--paper-elevated);
   border: 1px solid var(--grid-soft);
   border-radius: var(--r-lg);
