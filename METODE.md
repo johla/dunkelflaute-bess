@@ -1,8 +1,8 @@
-# Pedagogisk notat
+# Metode
 
 Dette notatet er ment som inngangsdøren til repoet for en fagperson eller en student. Det forklarer kort hva modellen gjør, hva den med vilje ikke gjør, og hvilken rekkefølge som er pedagogisk hensiktsmessig når man leser eller kritiserer den.
 
-Notatet erstatter ikke `README.md`, `ASSUMPTIONS.md` eller `ORDLISTE.md`. Det er en lesestøtte som peker videre til disse.
+Notatet erstatter ikke [README.md](README.md), [ASSUMPTIONS.md](ASSUMPTIONS.md) eller [ORDLISTE.md](ORDLISTE.md). Det er en lesestøtte som peker videre til disse.
 
 ## Hva modellen gjør
 
@@ -35,8 +35,8 @@ Disse temaene er viktige, men de hører hjemme i mer detaljerte modeller. Hensik
 
 For en fagperson eller en student som skal vurdere modellen, foreslås følgende rekkefølge:
 
-1. Les dette notatet og `README.md` sin femminuttersversjon.
-2. Kjør `notebooks/dunkelflaute_batteri_lab.ipynb` fra toppen uten å endre noe.
+1. Les dette notatet og [README.md](README.md) sin femminuttersversjon.
+2. Kjør [`notebooks/dunkelflaute_batteri_lab.ipynb`](notebooks/dunkelflaute_batteri_lab.ipynb) fra toppen uten å endre noe.
 3. Endre **bare residual effektmangel** og se hvordan tall flytter seg.
 4. Endre deretter **bare varighet**.
 5. Først etter at størrelsesordenen er forstått: endre kjemimiks, kost og produksjonskapasitet.
@@ -63,17 +63,17 @@ En god faglig kritikk bør:
 
 - peke på hvilken antakelse i `data/defaults.json` eller i notebooken den utfordrer
 - vise en tallmessig konsekvens av den endrede antakelsen
-- skille mellom kildeverdier (jf. `ASSUMPTIONS.md`) og modellantakelser
+- skille mellom kildeverdier (jf. [ASSUMPTIONS.md](ASSUMPTIONS.md)) og modellantakelser
 - foreslå hvilken mer detaljert modell som ville være riktig neste skritt dersom størrelsesordenen er plausibel
 
 Dette er en pedagogisk modell. Den er nyttig nettopp fordi den er enkel nok til at uenighet kan lokaliseres til konkrete linjer og tall.
 
 ## Videre lesning i repoet
 
-- `README.md` — overordnet forklaring og repo-struktur
-- `ASSUMPTIONS.md` — skille mellom kildeverdier og modellantakelser
-- `ORDLISTE.md` — termer, forkortelser og enheter
+- [README.md](README.md) — overordnet forklaring og repo-struktur
+- [ASSUMPTIONS.md](ASSUMPTIONS.md) — skille mellom kildeverdier og modellantakelser
+- [ORDLISTE.md](ORDLISTE.md) — termer, forkortelser og enheter
 - `data/defaults.json` — alle tallverdier samlet på ett sted
-- `notebooks/dunkelflaute_batteri_lab.ipynb` — hovednotebook
-- `notebooks/extensions/` — utvidelser som belyser enkelttemaer
-- `docs/UNDERVISNINGSOPPLEGG.md` — forslag til hvordan repoet kan brukes i undervisning
+- [`notebooks/dunkelflaute_batteri_lab.ipynb`](notebooks/dunkelflaute_batteri_lab.ipynb) — hovednotebook
+- [`notebooks/extensions/`](notebooks/extensions/) — utvidelser som belyser enkelttemaer
+- [`docs/UNDERVISNINGSOPPLEGG.md`](docs/UNDERVISNINGSOPPLEGG.md) — forslag til hvordan repoet kan brukes i undervisning
