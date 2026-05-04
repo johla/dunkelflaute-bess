@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-05-04T09:11:31+00:00",
+  "source": {
+    "defaults": "data/defaults.json",
+    "model": "src/dunkelflaute.py",
+    "scenarios": "docs/data/scenarios.json"
+  },
+  "anchors": {
+    "household_kwh_per_year_2024": 14700.0,
+    "bergen_twh_per_year_2024": 3.4898,
+    "oslo_twh_per_year_2024": 8.7589,
+    "statkraft_norway_twh_per_year_2025": 51.2,
+    "norway_consumption_including_losses_twh_2025": 139.2,
+    "norway_production_twh_2025": 162.0,
+    "norway_hydro_reservoir_capacity_twh": 87.0
+  },
+  "base_scenario": {
+    "inputs": {
+      "residual_gap_gw": 250.0,
+      "event_days": 10.0,
+      "usable_fraction": 0.8
+    },
+    "outputs": {
+      "delivered_energy_twh": 60.0,
+      "installed_battery_twh": 75.0,
+      "pack_cost_trillion_usd": 5.25,
+      "turnkey_cost_trillion_usd": 8.775,
+      "lfp_twh": 56.25,
+      "sodium_ion_twh": 11.25,
+      "other_long_duration_twh": 7.5,
+      "lithium_required_tonnes": 5062500.0,
+      "lithium_required_million_tonnes": 5.0625,
+      "years_of_2025_lithium_production": 17.45689655172414,
+      "years_of_global_cell_capacity": 25.0,
+      "multiples_of_2025_eu_bess_additions": 2767.5276752767527
+    }
+  },
+  "named_scenarios": [
+    {
+      "id": "mild",
+      "name": "Mild hendelse",
+      "explanation": "Kortvarig hendelse som delvis dekkes av import, regulerbar produksjon og fleksibilitet i forbruket.",
+      "inputs": {
+        "residual_gap_gw": 100.0,
+        "event_days": 3.0,
+        "usable_fraction": 0.8
+      },
+      "outputs": {
+        "delivered_energy_twh": 7.2,
+        "installed_battery_twh": 9.0,
+        "turnkey_cost_trillion_usd": 1.053,
+        "years_of_global_cell_capacity": 3.0,
+        "multiples_of_2025_eu_bess_additions": 332.1033210332103,
+        "lithium_required_million_tonnes": 0.6075
+      }
+    },
+    {
+      "id": "base",
+      "name": "Repoets standardscenario",
+      "explanation": "Pedagogisk midtpunkt mellom korte og lange hendelser. Brukes som referanse i hovednotebooken.",
+      "inputs": {
+        "residual_gap_gw": 250.0,
+        "event_days": 10.0,
+        "usable_fraction": 0.8
+      },
+      "outputs": {
+        "delivered_energy_twh": 60.0,
+        "installed_battery_twh": 75.0,
+        "turnkey_cost_trillion_usd": 8.775,
+        "years_of_global_cell_capacity": 25.0,
+        "multiples_of_2025_eu_bess_additions": 2767.5276752767527,
+        "lithium_required_million_tonnes": 5.0625
+      }
+    },
+    {
+      "id": "severe",
+      "name": "Alvorlig flerdagershendelse",
+      "explanation": "Stort residualt gap over to uker. Flytter problemet fra ordinær BESS til strategisk energilager.",
+      "inputs": {
+        "residual_gap_gw": 350.0,
+        "event_days": 14.0,
+        "usable_fraction": 0.8
+      },
+      "outputs": {
+        "delivered_energy_twh": 117.6,
+        "installed_battery_twh": 146.99999999999997,
+        "turnkey_cost_trillion_usd": 17.198999999999998,
+        "years_of_global_cell_capacity": 48.99999999999999,
+        "multiples_of_2025_eu_bess_additions": 5424.354243542434,
+        "lithium_required_million_tonnes": 9.922499999999996
+      }
+    }
+  ]
+}

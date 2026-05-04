@@ -88,6 +88,24 @@ Viktig nyanse: ikke bruk disse ankrene til å late som energi er fullt flyttbar.
 
 Se [`getting_started.md`](getting_started.md) for instruksjoner for lokal installasjon og GitHub Codespaces.
 
+## GitHub Pages
+
+Repoet publiserer en publikumsvennlig SPA i [`docs/`](docs/) som lar leseren
+endre antakelser og umiddelbart se konsekvensene. Den bruker samme
+deterministiske formler som [`src/dunkelflaute.py`](src/dunkelflaute.py).
+
+- **Designsystem:** [`docs/DESIGN.md`](docs/DESIGN.md) (Nordic Energy Explainer).
+- **Spec:** [`docs/GITHUB-PAGES.md`](docs/GITHUB-PAGES.md).
+- **Eksport av data:** kjør `python scripts/export_site_data.py` for å
+  regenerere `docs/data/site-results.json` fra `data/defaults.json` og
+  `src/dunkelflaute.py`. Det gir én sannhetskilde og hindrer formelsklid
+  mellom Python og JS.
+- **Lokal smoke-test:** `python -m http.server --directory docs 8000` og
+  åpne `http://localhost:8000`.
+
+For å publisere: GitHub → Settings → Pages → Source: deploy from branch,
+branch `main`, folder `/docs`.
+
 ## For faglig vurdering
 
 Repoet er skrevet for å være mulig å angripe. De viktigste antakelsene ligger i `data/defaults.json`, og [`ASSUMPTIONS.md`](ASSUMPTIONS.md) skiller kildeverdier fra modellantakelser. [`METODE.md`](METODE.md) oppsummerer hva modellen viser, hva den ikke viser, og hvilke spørsmål som er mest relevante å diskutere.
@@ -116,7 +134,17 @@ En nyttig faglig kritikk bør derfor helst endre én av disse:
 ├── data/
 │   └── defaults.json
 ├── docs/
-│   └── UNDERVISNINGSOPPLEGG.md
+│   ├── DESIGN.md
+│   ├── GITHUB-PAGES.md
+│   ├── UNDERVISNINGSOPPLEGG.md
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── data/
+│       ├── defaults.json
+│       ├── scenarios.json
+│       ├── glossary.json
+│       └── site-results.json
 ├── notebooks/
 │   ├── dunkelflaute_batteri_lab.ipynb
 │   └── extensions/
@@ -127,6 +155,8 @@ En nyttig faglig kritikk bør derfor helst endre én av disse:
 │       ├── 05_ladevindu.ipynb
 │       ├── 06_overforing_regioner.ipynb
 │       └── 07_levetidskost_per_mwh.ipynb
+├── scripts/
+│   └── export_site_data.py
 └── src/
     └── dunkelflaute.py
 ```

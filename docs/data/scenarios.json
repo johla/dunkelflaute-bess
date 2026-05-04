@@ -1,0 +1,57 @@
+{
+  "scenarios": [
+    {
+      "id": "mild",
+      "name": "Mild hendelse",
+      "residual_gap_gw": 100,
+      "event_days": 3,
+      "explanation": "Kortvarig hendelse som delvis dekkes av import, regulerbar produksjon og fleksibilitet i forbruket."
+    },
+    {
+      "id": "base",
+      "name": "Repoets standardscenario",
+      "residual_gap_gw": 250,
+      "event_days": 10,
+      "explanation": "Pedagogisk midtpunkt mellom korte og lange hendelser. Brukes som referanse i hovednotebooken."
+    },
+    {
+      "id": "severe",
+      "name": "Alvorlig flerdagershendelse",
+      "residual_gap_gw": 350,
+      "event_days": 14,
+      "explanation": "Stort residualt gap over to uker. Flytter problemet fra ordinær BESS til strategisk energilager."
+    }
+  ],
+  "attacks": [
+    {
+      "id": "halve_gap",
+      "label": "Halver residualgapet",
+      "description": "Anta at andre kilder dekker dobbelt så mye av effekten.",
+      "patch": { "residual_gap_gw_factor": 0.5 }
+    },
+    {
+      "id": "halve_duration",
+      "label": "Halver varigheten",
+      "description": "Anta at hendelsen kun varer halvparten så lenge.",
+      "patch": { "event_days_factor": 0.5 }
+    },
+    {
+      "id": "halve_cost",
+      "label": "Anta 50 % lavere kost",
+      "description": "Anta at turnkey BESS-pris er halvert.",
+      "patch": { "turnkey_bess_cost_usd_per_kwh_factor": 0.5 }
+    },
+    {
+      "id": "triple_capacity",
+      "label": "Anta 3× global cellekapasitet",
+      "description": "Anta at verdens cellefabrikker bygges ut til tredobbelt.",
+      "patch": { "global_battery_cell_manufacturing_capacity_twh_2024_factor": 3.0 }
+    },
+    {
+      "id": "no_lfp",
+      "label": "Fjern LFP-andelen",
+      "description": "Anta 0 % LFP, alt blir natrium-ion eller annet langtidslager.",
+      "patch": { "lfp_share_value": 0.0, "sodium_ion_share_value": 0.5, "other_long_duration_share_value": 0.5 }
+    }
+  ]
+}
