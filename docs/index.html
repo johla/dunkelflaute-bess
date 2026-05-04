@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="nb-NO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dunkelflaute batteri-lab — hvor stort blir batteriet?</title>
+  <meta name="description" content="En enkel, åpen modell for hvor stor batteripark Europa måtte ha for å dekke en flerdagers Dunkelflaute. Norsk Bokmål, vanilla JS, samme formler som notebooken." />
+  <meta name="color-scheme" content="light" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container-wide topbar-inner">
+    <a class="brand" href="#top">Dunkelflaute batteri-lab</a>
+    <nav aria-label="Hovednavigasjon">
+      <a href="#kalkulator">Prøv selv</a>
+      <a href="#angrip">Angrip modellen</a>
+      <a href="#dypere">Gå dypere</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="section hero">
+    <div class="container">
+      <span class="label eyebrow">En åpen, falsifiserbar modell</span>
+      <h1>Hvor stort blir batteriet?</h1>
+      <p class="claim">
+        Batterier er glimrende for timer.
+        Denne siden undersøker hva som skjer når <em>timer</em> blir <em>døgn</em>.
+      </p>
+      <p class="lead muted">
+        Effekt er fart. Energi er mengde. En flerdagers Dunkelflaute handler ikke
+        primært om batterikjemi — den handler først om <strong>GW × døgn</strong>.
+      </p>
+
+      <div class="identity" aria-label="Kjerneidentitet">
+        <strong id="hero-gw">250 GW</strong> × <strong id="hero-days">10 døgn</strong>
+        = <strong id="hero-delivered">60 TWh</strong> levert energi<br />
+        Med <strong id="hero-usable">80 %</strong> utnyttbar kapasitet:
+        <strong id="hero-installed">75 TWh</strong> installert batteri
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- 2. RESULT CARDS -->
+  <section class="section" id="resultater">
+    <div class="container-wide">
+      <span class="label">Standardresultat</span>
+      <h2>Det første regnestykket</h2>
+      <p class="lead muted">
+        Repoets standardscenario: 250 GW residual effektmangel i 10 døgn,
+        80 % utnyttbar batteriandel. Endre tallene under for å se hvordan
+        konklusjonen flytter seg.
+      </p>
+
+      <div class="results-grid">
+        <div class="result-card primary">
+          <span class="label">Installert batteri</span>
+          <div class="number" id="r-installed">–</div>
+          <div class="interp" id="r-installed-interp">TWh installert kapasitet</div>
+          <div class="footnote">Levert energi delt på utnyttbar andel.</div>
+        </div>
+
+        <div class="result-card secondary">
+          <span class="label">Levert energi</span>
+          <div class="number" id="r-delivered">–</div>
+          <div class="interp">TWh som faktisk når sluttbruker.</div>
+        </div>
+
+        <div class="result-card secondary">
+          <span class="label">Turnkey kost</span>
+          <div class="number" id="r-cost">–</div>
+          <div class="interp">billioner USD ferdig installert.</div>
+        </div>
+
+        <div class="result-card secondary">
+          <span class="label">År av global cellekapasitet</span>
+          <div class="number" id="r-cell-years">–</div>
+          <div class="interp">Hele verdens batterifabrikker dedikert til oppgaven.</div>
+        </div>
+
+        <div class="result-card secondary">
+          <span class="label">Multipler av EU 2025 BESS-tilvekst</span>
+          <div class="number" id="r-eu-mult">–</div>
+          <div class="interp">Hvor mange ganger 2025-takten må gjentas.</div>
+        </div>
+
+        <div class="result-card secondary">
+          <span class="label">Litiumbehov</span>
+          <div class="number" id="r-lithium">–</div>
+          <div class="interp">millioner tonn lithium-metall til LFP-andelen.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CALCULATOR -->
+  <section class="section" id="kalkulator">
+    <div class="container-wide">
+      <span class="label">Prøv selv</span>
+      <h2>Endre antakelser, se konsekvenser</h2>
+      <p class="lead muted">
+        Velg et forhåndsdefinert scenario, eller skru på enkeltparametere.
+        Resultatene oppdateres umiddelbart med samme formler som
+        <code>src/dunkelflaute.py</code>.
+      </p>
+
+      <div class="button-row" id="scenario-buttons" role="group" aria-label="Forhåndsdefinerte scenarier">
+        <!-- buttons injected by app.js -->
+      </div>
+
+      <div class="calc">
+        <div class="calc-panel">
+          <h3>Hovedparametere</h3>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <span class="name">Residual effektmangel</span>
+              <span class="value"><span id="v-gap">250</span> GW</span>
+            </div>
+            <p class="explain">Det som blir igjen etter kjernekraft, vannkraft, import og fleksibilitet.</p>
+            <input type="range" id="i-gap" min="50" max="500" step="10" value="250" />
+            <div class="range-meta"><span>50 GW</span><span>500 GW</span></div>
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <span class="name">Varighet</span>
+              <span class="value"><span id="v-days">10</span> døgn</span>
+            </div>
+            <p class="explain">Hvor mange døgn hendelsen antas å vare.</p>
+            <input type="range" id="i-days" min="1" max="21" step="1" value="10" />
+            <div class="range-meta"><span>1 døgn</span><span>21 døgn</span></div>
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <span class="name">Utnyttbar andel</span>
+              <span class="value"><span id="v-usable">80</span> %</span>
+            </div>
+            <p class="explain">Andel av installert batteri som faktisk kan leveres etter reserve og degradering.</p>
+            <input type="range" id="i-usable" min="40" max="95" step="1" value="80" />
+            <div class="range-meta"><span>40 %</span><span>95 %</span></div>
+          </div>
+
+          <details class="advanced">
+            <summary>Avanserte antakelser</summary>
+            <div class="advanced-body">
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <span class="name">Turnkey BESS-kost</span>
+                  <span class="value"><span id="v-cost">117</span> USD/kWh</span>
+                </div>
+                <p class="explain">Pris for ferdig installert batterisystem inkl. inverter og nettilknytning.</p>
+                <input type="range" id="i-cost" min="40" max="250" step="1" value="117" />
+                <div class="range-meta"><span>40</span><span>250</span></div>
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <span class="name">LFP-andel</span>
+                  <span class="value"><span id="v-lfp">75</span> %</span>
+                </div>
+                <p class="explain">Andel litium-jern-fosfat i kjemimiksen. Andelene normaliseres til 100 %.</p>
+                <input type="range" id="i-lfp" min="0" max="100" step="1" value="75" />
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <span class="name">Natrium-ion-andel</span>
+                  <span class="value"><span id="v-sodium">15</span> %</span>
+                </div>
+                <input type="range" id="i-sodium" min="0" max="100" step="1" value="15" />
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <span class="name">Annet langtidslager</span>
+                  <span class="value"><span id="v-other">10</span> %</span>
+                </div>
+                <input type="range" id="i-other" min="0" max="100" step="1" value="10" />
+              </div>
+
+              <p class="small">
+                Globale referanseverdier (cellekapasitet, EU BESS-tilvekst, litiumproduksjon)
+                hentes fra <code>data/defaults.json</code> og er ikke justerbare i UI-et.
+                Endre dem i <a href="https://github.com/johla/dunkelflaute-bess/blob/main/data/defaults.json">defaults.json</a>
+                for å analysere dem på dypere nivå.
+              </p>
+            </div>
+          </details>
+
+          <div style="margin-top: var(--sp-lg);">
+            <button type="button" class="btn btn-secondary" id="btn-reset">Tilbakestill til standard</button>
+          </div>
+        </div>
+
+        <div class="calc-panel" aria-label="Heatmap: gap × varighet">
+          <h3>Gap × varighet → installert TWh</h3>
+          <p class="small">
+            Rad = varighet (døgn), kolonne = residual effektmangel (GW).
+            Cellen viser installert TWh ved nåværende utnyttbar andel.
+            Den uthevede cellen er nåværende valg.
+          </p>
+          <div class="heatmap-wrap">
+            <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
+          </div>
+          <p class="heatmap-caption">
+            Tallene vokser lineært i begge retninger. Det er nettopp dette som gjør
+            multi-døgn-batteri til et størrelsesordensproblem, ikke et kjemiproblem.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- 4. HUMAN-SCALE TRANSLATIONS -->
+  <section class="section" id="ankre">
+    <div class="container-wide">
+      <span class="label">Hva betyr tallet?</span>
+      <h2>I menneskelige størrelser</h2>
+      <p class="lead muted">
+        Et installert batteri på <strong id="anchor-installed">75 TWh</strong> tilsvarer omtrent:
+      </p>
+      <ul class="anchor-list" id="anchor-list">
+        <!-- injected by app.js -->
+      </ul>
+      <p class="small" style="margin-top: var(--sp-lg);">
+        Viktig nyanse: ikke bruk disse ankrene til å late som energi er fullt flyttbar.
+        Kraftsystemet trenger også effektkapasitet, varighet, geografisk plassering,
+        regulerbarhet, sesongprofil og nett.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. BESS CONTEXT -->
+  <section class="section" id="bess">
+    <div class="container-wide">
+      <span class="label">Kontekst</span>
+      <h2>Batterier er nyttige — men til hva?</h2>
+      <div class="two-col">
+        <div class="col-card">
+          <h3>Hva BESS er svært bra for</h3>
+          <p>
+            Frekvensrespons, intra-dag-utjevning, reserve på minutter til timer,
+            prisarbitrasje, nettavlastning og integrasjon av sol og vind.
+          </p>
+          <p class="small">Typiske varigheter: 2–8 timer.</p>
+        </div>
+        <div class="col-card">
+          <h3>Hva denne siden faktisk spør om</h3>
+          <p>
+            Om batterier <em>alene</em> er en rasjonell løsning for kontinental,
+            flerdagers Dunkelflaute. Når hendelsen går fra timer til døgn,
+            flytter problemet seg til strategisk energilager, fleksibilitet,
+            overføringsnett, regulerbar produksjon, vannmagasiner,
+            hydrogen/metan/ammoniakk og termisk backup.
+          </p>
+          <p class="small">Typiske varigheter: 50–250 timer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- 6. FALSIFICATION -->
+  <section class="section" id="angrip">
+    <div class="container-wide">
+      <div class="attack-section">
+        <span class="chip">Falsifisering</span>
+        <h2 style="margin-top: var(--sp-md);">Angrip modellen</h2>
+        <p class="lead">
+          Endre én antakelse og se hva som faktisk flytter konklusjonen.
+        </p>
+        <p class="muted">
+          Hver knapp endrer kun én størrelse i forhold til <em>repoets standardscenario</em>
+          (250 GW × 10 døgn, ikke dine egne sliderverdier).
+          Tallet under viser hvor mye <strong>installert TWh</strong> endrer seg.
+        </p>
+        <div class="button-row" id="attack-buttons" role="group" aria-label="Angrep på modellen">
+          <!-- injected by app.js -->
+        </div>
+        <div class="attack-results" id="attack-results">
+          <!-- injected by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. DEEPER -->
+  <section class="section" id="dypere">
+    <div class="container-wide">
+      <span class="label">Gå dypere</span>
+      <h2>Notebooks, antakelser, kilder</h2>
+      <p class="lead muted">
+        Denne siden er den guidede inngangen. Modellen, antakelsene og kildene
+        ligger i repoet — den er bygget for å være mulig å angripe.
+      </p>
+      <ul>
+        <li><a href="https://github.com/johla/dunkelflaute-bess">GitHub-repo og README</a> — full kontekst og repo-struktur.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/blob/main/METODE.md">METODE.md</a> — hva modellen viser, hva den ikke viser.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/blob/main/ASSUMPTIONS.md">ASSUMPTIONS.md</a> — kildeverdier vs. modellantakelser.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/blob/main/ORDLISTE.md">ORDLISTE.md</a> — fullstendig ordliste.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/blob/main/notebooks/dunkelflaute_batteri_lab.ipynb">Hovednotebook</a> — den kjørbare grunnmodellen.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/tree/main/notebooks/extensions">Utvidelses-notebooks</a> — timeprofiler, vannmagasin, andre teknologier, m.m.</li>
+        <li><a href="https://github.com/johla/dunkelflaute-bess/blob/main/src/dunkelflaute.py">src/dunkelflaute.py</a> — den kanoniske formelen som denne siden gjenbruker.</li>
+      </ul>
+
+      <h3 style="margin-top: var(--sp-xl);">Hurtig-ordliste</h3>
+      <dl class="glossary" id="glossary">
+        <!-- injected by app.js -->
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container-wide">
+    <p>
+      Pedagogisk størrelsesorden, ikke kraftsystemoptimalisering.
+      Lisens: <a href="https://github.com/johla/dunkelflaute-bess/blob/main/LICENSE">CC BY 4.0</a>.
+      Kildeliste i <a href="https://github.com/johla/dunkelflaute-bess/blob/main/data/defaults.json">data/defaults.json</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

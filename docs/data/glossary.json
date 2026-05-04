@@ -1,0 +1,36 @@
+{
+  "terms": [
+    {
+      "term": "Dunkelflaute",
+      "definition": "Tysk for «mørk vindstille». En periode der både vind- og solproduksjon er lav over store geografiske områder samtidig, ofte i forbindelse med vinterhøytrykk. Kan vare fra noen timer til 1–2 uker."
+    },
+    {
+      "term": "Residual effektmangel",
+      "definition": "Det som blir igjen av etterspørselen etter at all annen produksjon (kjernekraft, vannkraft, import, termisk backup, fleksibelt forbruk osv.) er trukket fra. Måles i GW."
+    },
+    {
+      "term": "Effekt vs. energi",
+      "definition": "Effekt (GW) er fart. Energi (TWh) er mengde. Et batteri har to uavhengige størrelser: hvor stor effekt det leverer, og hvor mye energi det rommer."
+    },
+    {
+      "term": "Oslo-år",
+      "definition": "Pedagogisk normalisering. Oslo bruker ca. 8,76 TWh/år, altså i snitt 1 GW. 75 TWh tilsvarer ca. 8,6 Oslo-år."
+    },
+    {
+      "term": "Utnyttbar andel",
+      "definition": "Andelen av installert batterikapasitet som faktisk kan leveres til nettet etter reserve, degradering og driftsmargin. Standardverdi 80 %."
+    },
+    {
+      "term": "BESS",
+      "definition": "Battery Energy Storage System. Stasjonært batterilager, typisk LFP i dag, med varigheter på 2–8 timer."
+    },
+    {
+      "term": "LFP",
+      "definition": "Litium-jern-fosfat. Dominerende kjemi i stasjonær batterilagring i 2025 på grunn av lav kost og lang sykluslevetid."
+    },
+    {
+      "term": "Turnkey BESS-kost",
+      "definition": "Pris for ferdig installert batterisystem inkl. inverter, montasje og nettilknytning. BNEF-tall for 2025: ca. 117 USD/kWh."
+    }
+  ]
+}
