@@ -220,23 +220,21 @@
             Cellen viser installert TWh ved nåværende utnyttbar andel.
             Det glidende punktet under følger sliderne mellom tabellverdiene.
           </p>
-          <div class="glide-map" aria-live="polite">
-            <div class="glide-head">
-              <span class="label">Nåværende valg</span>
-              <strong id="glide-summary">250 GW × 10 døgn → 75 TWh</strong>
-            </div>
-            <div class="glide-surface" role="img" aria-label="Glidende visualisering av residual effektmangel og varighet">
-              <div class="glide-marker" id="glide-marker">
+          <div class="glide-head" aria-live="polite">
+            <span class="label">Nåværende valg</span>
+            <strong id="glide-summary">250 GW × 10 døgn → 75 TWh</strong>
+          </div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-stage">
+              <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
+              <div class="heatmap-glide-marker" id="glide-marker" aria-hidden="true">
                 <span id="glide-marker-value">75 TWh</span>
               </div>
             </div>
-            <div class="glide-axis">
-              <span>lavt gap / kort hendelse</span>
-              <span>høyt gap / lang hendelse</span>
-            </div>
           </div>
-          <div class="heatmap-wrap">
-            <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
+          <div class="glide-axis">
+            <span>lavt gap / kort hendelse</span>
+            <span>høyt gap / lang hendelse</span>
           </div>
           <p class="heatmap-caption">
             Tallene vokser lineært i begge retninger. Det er nettopp dette som gjør

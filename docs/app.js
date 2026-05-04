@@ -102,6 +102,12 @@ const state = {
 };
 
 const MIX_KEYS = ["lfp_share", "sodium_ion_share", "other_long_duration_share"];
+const HEATMAP_GAPS = [50, 100, 150, 200, 250, 300, 400, 500];
+const HEATMAP_DAYS = [1, 3, 5, 7, 10, 14, 21];
+const HEATMAP_AXIS_WIDTH = 64;
+const HEATMAP_HEADER_HEIGHT = 36;
+const HEATMAP_CELL_WIDTH = 96;
+const HEATMAP_CELL_HEIGHT = 64;
 
 function applyDefaults() {
   Object.assign(state, DEFAULTS.defaults);
@@ -186,21 +192,30 @@ function clamp01(n) {
   return Math.min(1, Math.max(0, n));
 }
 
-function sliderRatio(id, value) {
-  const input = $(id);
-  const min = Number(input.min);
-  const max = Number(input.max);
-  return clamp01((value - min) / (max - min));
+function tablePosition(value, stops) {
+  if (value <= stops[0]) return 0.5;
+  const lastIndex = stops.length - 1;
+  if (value >= stops[lastIndex]) return lastIndex + 0.5;
+
+  for (let i = 0; i < lastIndex; i += 1) {
+    if (value >= stops[i] && value <= stops[i + 1]) {
+      const t = (value - stops[i]) / (stops[i + 1] - stops[i]);
+      return i + 0.5 + t;
+    }
+  }
+  return 0.5;
 }
 
 function renderGlideMap(r) {
   const marker = $("glide-marker");
   if (!marker) return;
 
-  const gapRatio = sliderRatio("i-gap", state.residual_gap_gw);
-  const dayRatio = sliderRatio("i-days", state.event_days);
-  marker.style.setProperty("--x", `${gapRatio * 100}%`);
-  marker.style.setProperty("--y", `${dayRatio * 100}%`);
+  const gapPosition = tablePosition(state.residual_gap_gw, HEATMAP_GAPS);
+  const dayPosition = tablePosition(state.event_days, HEATMAP_DAYS);
+  marker.style.left = `${HEATMAP_AXIS_WIDTH + gapPosition * HEATMAP_CELL_WIDTH}px`;
+  marker.style.top = `${HEATMAP_HEADER_HEIGHT + dayPosition * HEATMAP_CELL_HEIGHT}px`;
+  marker.style.width = `${HEATMAP_CELL_WIDTH - 8}px`;
+  marker.style.height = `${HEATMAP_CELL_HEIGHT - 8}px`;
 
   setText(
     "glide-summary",
@@ -267,8 +282,8 @@ function renderAnchors(r) {
 }
 
 function renderHeatmap() {
-  const gaps = [50, 100, 150, 200, 250, 300, 400, 500];
-  const days = [1, 3, 5, 7, 10, 14, 21];
+  const gaps = HEATMAP_GAPS;
+  const days = HEATMAP_DAYS;
 
   const cells = [];
   for (const d of days) {
@@ -281,7 +296,8 @@ function renderHeatmap() {
 
   // Build grid: 1 + gaps.length columns, 1 + days.length rows
   const grid = $("heatmap");
-  grid.style.gridTemplateColumns = `auto repeat(${gaps.length}, minmax(46px, 1fr))`;
+  grid.style.gridTemplateColumns = `${HEATMAP_AXIS_WIDTH}px repeat(${gaps.length}, ${HEATMAP_CELL_WIDTH}px)`;
+  grid.style.gridTemplateRows = `${HEATMAP_HEADER_HEIGHT}px repeat(${days.length}, ${HEATMAP_CELL_HEIGHT}px)`;
 
   const html = [];
   // Header row
@@ -296,11 +312,8 @@ function renderHeatmap() {
       // mix paper -> energy-blue
       const bg = blendColor("#FFFDF7", "#1F6F8B", t);
       const fg = t > 0.55 ? "#FFFDF7" : "#1D2528";
-      const isCurrent =
-        g === Math.round(state.residual_gap_gw) &&
-        d === Math.round(state.event_days);
       html.push(
-        `<div class="cell ${isCurrent ? "current" : ""}" style="background:${bg};color:${fg}" title="${g} GW × ${d} døgn">${fmt(installed)}</div>`
+        `<div class="cell" style="background:${bg};color:${fg}" title="${g} GW × ${d} døgn">${fmt(installed)}</div>`
       );
     }
   }
