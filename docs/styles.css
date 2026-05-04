@@ -360,6 +360,42 @@ details.advanced > summary::before {
 details.advanced[open] > summary::before { transform: rotate(90deg); }
 details.advanced > .advanced-body { margin-top: var(--sp-md); }
 
+.impact-note {
+  margin: var(--sp-lg) 0;
+  padding: var(--sp-md);
+  border: 1px solid var(--grid-soft);
+  border-radius: var(--r-md);
+  background-color: var(--paper-elevated);
+}
+.impact-note h4 {
+  margin: 0 0 var(--sp-sm) 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.impact-note p {
+  margin-bottom: var(--sp-sm);
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.mix-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+}
+.mix-summary span {
+  padding: 6px 10px;
+  border: 1px solid var(--grid-soft);
+  border-radius: var(--r-pill);
+  background-color: var(--paper);
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+.mix-summary strong {
+  color: var(--energy-blue-dark);
+}
+
 /* Buttons */
 .btn {
   display: inline-block;
@@ -478,6 +514,70 @@ details.advanced > .advanced-body { margin-top: var(--sp-md); }
 .attack-card .interp { font-size: 0.9rem; color: var(--ink-muted); margin-top: var(--sp-xs); }
 
 /* Heatmap */
+.glide-map {
+  margin-top: var(--sp-lg);
+  padding: var(--sp-md);
+  border: 1px solid var(--grid-soft);
+  border-radius: var(--r-lg);
+  background-color: var(--paper-elevated);
+}
+.glide-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+.glide-head strong {
+  color: var(--energy-blue-dark);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.glide-surface {
+  position: relative;
+  min-height: 220px;
+  border: 1px solid var(--grid);
+  border-radius: var(--r-md);
+  background:
+    linear-gradient(to right, color-mix(in srgb, var(--grid-soft) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--grid-soft) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(135deg, var(--paper-elevated) 0%, var(--amber-soft) 48%, var(--energy-blue) 100%);
+  background-size: 25% 25%, 25% 25%, 100% 100%;
+}
+.glide-marker {
+  position: absolute;
+  left: var(--x, 44%);
+  top: var(--y, 45%);
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-pill);
+  background-color: var(--paper-elevated);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--paper-elevated) 80%, transparent);
+}
+.glide-marker span {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  min-width: max-content;
+  padding: 4px 8px;
+  border-radius: var(--r-pill);
+  background-color: var(--ink);
+  color: var(--paper);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.glide-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  margin-top: var(--sp-sm);
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
 .heatmap-wrap {
   margin-top: var(--sp-lg);
   background-color: var(--paper-elevated);

@@ -101,6 +101,8 @@ const state = {
   eu_bess_additions_gwh_2025: 27.1
 };
 
+const MIX_KEYS = ["lfp_share", "sodium_ion_share", "other_long_duration_share"];
+
 function applyDefaults() {
   Object.assign(state, DEFAULTS.defaults);
   // ensure UI canonical names
@@ -141,6 +143,23 @@ function syncSlidersFromState() {
   setText("v-other", fmtInt(state.other_long_duration_share * 100));
 }
 
+function setMixShare(changedKey, percent) {
+  const nextShare = Math.min(100, Math.max(0, Number(percent))) / 100;
+  const otherKeys = MIX_KEYS.filter((key) => key !== changedKey);
+  const remaining = 1 - nextShare;
+  const otherTotal = otherKeys.reduce((sum, key) => sum + state[key], 0);
+
+  state[changedKey] = nextShare;
+
+  if (remaining <= 0) {
+    otherKeys.forEach((key) => { state[key] = 0; });
+  } else if (otherTotal <= 0) {
+    otherKeys.forEach((key) => { state[key] = remaining / otherKeys.length; });
+  } else {
+    otherKeys.forEach((key) => { state[key] = remaining * (state[key] / otherTotal); });
+  }
+}
+
 function renderHero(r) {
   setText("hero-gw", `${fmtInt(state.residual_gap_gw)} GW`);
   setText("hero-days", `${fmtInt(state.event_days)} døgn`);
@@ -160,6 +179,48 @@ function renderResults(r) {
   setText("r-cell-years", `${fmt(r.years_of_global_cell_capacity)}`);
   setText("r-eu-mult", `${fmtInt(r.multiples_of_2025_eu_bess_additions)}×`);
   setText("r-lithium", `${fmt(r.lithium_required_million_tonnes)}`);
+  renderAdvancedImpacts(r);
+}
+
+function clamp01(n) {
+  return Math.min(1, Math.max(0, n));
+}
+
+function sliderRatio(id, value) {
+  const input = $(id);
+  const min = Number(input.min);
+  const max = Number(input.max);
+  return clamp01((value - min) / (max - min));
+}
+
+function renderGlideMap(r) {
+  const marker = $("glide-marker");
+  if (!marker) return;
+
+  const gapRatio = sliderRatio("i-gap", state.residual_gap_gw);
+  const dayRatio = sliderRatio("i-days", state.event_days);
+  marker.style.setProperty("--x", `${gapRatio * 100}%`);
+  marker.style.setProperty("--y", `${dayRatio * 100}%`);
+
+  setText(
+    "glide-summary",
+    `${fmtInt(state.residual_gap_gw)} GW × ${fmtInt(state.event_days)} døgn → ${fmt(r.installed_twh)} TWh`
+  );
+  setText("glide-marker-value", `${fmt(r.installed_twh)} TWh`);
+}
+
+function renderAdvancedImpacts(r) {
+  setText(
+    "cost-impact",
+    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh)} USD/kWh gir ${fmt(r.turnkey_cost_trillion_usd)} billioner USD. Kost påvirker ikke levert eller installert TWh.`
+  );
+  setText(
+    "mix-impact",
+    `Miksen er ${fmtInt(r.mix.lfp * 100)} % LFP, ${fmtInt(r.mix.sodium * 100)} % natrium-ion og ${fmtInt(r.mix.other * 100)} % annet. Den påvirker litiumbehovet, ikke total batteristørrelse.`
+  );
+  setText("mix-lfp-output", `${fmt(r.lfp_twh)} TWh`);
+  setText("mix-sodium-output", `${fmt(r.sodium_ion_twh)} TWh`);
+  setText("mix-other-output", `${fmt(r.other_long_duration_twh)} TWh`);
 }
 
 function renderAnchors(r) {
@@ -397,6 +458,7 @@ function recalc() {
   renderHero(r);
   renderResults(r);
   renderAnchors(r);
+  renderGlideMap(r);
   renderHeatmap();
 }
 
@@ -405,10 +467,7 @@ function wireSliders() {
     ["i-gap", "v-gap", (v) => { state.residual_gap_gw = +v; }, (v) => fmtInt(+v)],
     ["i-days", "v-days", (v) => { state.event_days = +v; }, (v) => fmtInt(+v)],
     ["i-usable", "v-usable", (v) => { state.usable_fraction = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v)],
-    ["i-lfp", "v-lfp", (v) => { state.lfp_share = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-sodium", "v-sodium", (v) => { state.sodium_ion_share = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-other", "v-other", (v) => { state.other_long_duration_share = +v / 100; }, (v) => fmtInt(+v)]
+    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v)]
   ];
   for (const [inputId, valueId, setter, formatter] of map) {
     const inp = $(inputId);
@@ -416,6 +475,21 @@ function wireSliders() {
       setter(inp.value);
       setText(valueId, formatter(inp.value));
       // No scenario active anymore
+      markActiveScenario(null);
+      recalc();
+    });
+  }
+
+  const mixMap = [
+    ["i-lfp", "lfp_share"],
+    ["i-sodium", "sodium_ion_share"],
+    ["i-other", "other_long_duration_share"]
+  ];
+  for (const [inputId, key] of mixMap) {
+    const inp = $(inputId);
+    inp.addEventListener("input", () => {
+      setMixShare(key, inp.value);
+      syncSlidersFromState();
       markActiveScenario(null);
       recalc();
     });

@@ -121,31 +121,31 @@
 
           <div class="slider-row">
             <div class="slider-head">
-              <span class="name">Residual effektmangel</span>
+              <label class="name" for="i-gap">Residual effektmangel</label>
               <span class="value"><span id="v-gap">250</span> GW</span>
             </div>
-            <p class="explain">Det som blir igjen etter kjernekraft, vannkraft, import og fleksibilitet.</p>
-            <input type="range" id="i-gap" min="50" max="500" step="10" value="250" />
+            <p class="explain" id="d-gap">Det som blir igjen etter kjernekraft, vannkraft, import og fleksibilitet.</p>
+            <input type="range" id="i-gap" min="50" max="500" step="10" value="250" aria-describedby="d-gap" />
             <div class="range-meta"><span>50 GW</span><span>500 GW</span></div>
           </div>
 
           <div class="slider-row">
             <div class="slider-head">
-              <span class="name">Varighet</span>
+              <label class="name" for="i-days">Varighet</label>
               <span class="value"><span id="v-days">10</span> døgn</span>
             </div>
-            <p class="explain">Hvor mange døgn hendelsen antas å vare.</p>
-            <input type="range" id="i-days" min="1" max="21" step="1" value="10" />
+            <p class="explain" id="d-days">Hvor mange døgn hendelsen antas å vare.</p>
+            <input type="range" id="i-days" min="1" max="21" step="1" value="10" aria-describedby="d-days" />
             <div class="range-meta"><span>1 døgn</span><span>21 døgn</span></div>
           </div>
 
           <div class="slider-row">
             <div class="slider-head">
-              <span class="name">Utnyttbar andel</span>
+              <label class="name" for="i-usable">Utnyttbar andel</label>
               <span class="value"><span id="v-usable">80</span> %</span>
             </div>
-            <p class="explain">Andel av installert batteri som faktisk kan leveres etter reserve og degradering.</p>
-            <input type="range" id="i-usable" min="40" max="95" step="1" value="80" />
+            <p class="explain" id="d-usable">Andel av installert batteri som faktisk kan leveres etter reserve og degradering.</p>
+            <input type="range" id="i-usable" min="40" max="95" step="1" value="80" aria-describedby="d-usable" />
             <div class="range-meta"><span>40 %</span><span>95 %</span></div>
           </div>
 
@@ -155,37 +155,48 @@
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <span class="name">Turnkey BESS-kost</span>
+                  <label class="name" for="i-cost">Turnkey BESS-kost</label>
                   <span class="value"><span id="v-cost">117</span> USD/kWh</span>
                 </div>
-                <p class="explain">Pris for ferdig installert batterisystem inkl. inverter og nettilknytning.</p>
-                <input type="range" id="i-cost" min="40" max="250" step="1" value="117" />
+                <p class="explain" id="d-cost">Pris for ferdig installert batterisystem inkl. inverter og nettilknytning.</p>
+                <input type="range" id="i-cost" min="40" max="250" step="1" value="117" aria-describedby="d-cost cost-impact" />
                 <div class="range-meta"><span>40</span><span>250</span></div>
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <span class="name">LFP-andel</span>
+                  <label class="name" for="i-lfp">LFP-andel</label>
                   <span class="value"><span id="v-lfp">75</span> %</span>
                 </div>
-                <p class="explain">Andel litium-jern-fosfat i kjemimiksen. Andelene normaliseres til 100 %.</p>
-                <input type="range" id="i-lfp" min="0" max="100" step="1" value="75" />
+                <p class="explain" id="d-mix">Kjemimiksen holdes på 100 %. Når én andel endres, justeres de andre to forholdsmessig.</p>
+                <input type="range" id="i-lfp" min="0" max="100" step="1" value="75" aria-describedby="d-mix mix-impact" />
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <span class="name">Natrium-ion-andel</span>
+                  <label class="name" for="i-sodium">Natrium-ion-andel</label>
                   <span class="value"><span id="v-sodium">15</span> %</span>
                 </div>
-                <input type="range" id="i-sodium" min="0" max="100" step="1" value="15" />
+                <input type="range" id="i-sodium" min="0" max="100" step="1" value="15" aria-describedby="d-mix mix-impact" />
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <span class="name">Annet langtidslager</span>
+                  <label class="name" for="i-other">Annet langtidslager</label>
                   <span class="value"><span id="v-other">10</span> %</span>
                 </div>
-                <input type="range" id="i-other" min="0" max="100" step="1" value="10" />
+                <input type="range" id="i-other" min="0" max="100" step="1" value="10" aria-describedby="d-mix mix-impact" />
+              </div>
+
+              <div class="impact-note" aria-live="polite">
+                <h4>Hva endres egentlig?</h4>
+                <p id="cost-impact">Kostslideren endrer bare kostestimatet, ikke energibehovet.</p>
+                <p id="mix-impact">Kjemimiksen endrer fordelingen og litiumbehovet, ikke total installert TWh.</p>
+                <div class="mix-summary" aria-label="Batterikjemi fordelt på installert kapasitet">
+                  <span><strong id="mix-lfp-output">–</strong> LFP</span>
+                  <span><strong id="mix-sodium-output">–</strong> natrium-ion</span>
+                  <span><strong id="mix-other-output">–</strong> annet</span>
+                </div>
               </div>
 
               <p class="small">
@@ -207,8 +218,23 @@
           <p class="small">
             Rad = varighet (døgn), kolonne = residual effektmangel (GW).
             Cellen viser installert TWh ved nåværende utnyttbar andel.
-            Den uthevede cellen er nåværende valg.
+            Det glidende punktet under følger sliderne mellom tabellverdiene.
           </p>
+          <div class="glide-map" aria-live="polite">
+            <div class="glide-head">
+              <span class="label">Nåværende valg</span>
+              <strong id="glide-summary">250 GW × 10 døgn → 75 TWh</strong>
+            </div>
+            <div class="glide-surface" role="img" aria-label="Glidende visualisering av residual effektmangel og varighet">
+              <div class="glide-marker" id="glide-marker">
+                <span id="glide-marker-value">75 TWh</span>
+              </div>
+            </div>
+            <div class="glide-axis">
+              <span>lavt gap / kort hendelse</span>
+              <span>høyt gap / lang hendelse</span>
+            </div>
+          </div>
           <div class="heatmap-wrap">
             <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
           </div>
