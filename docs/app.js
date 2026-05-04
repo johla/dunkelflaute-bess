@@ -576,6 +576,19 @@ function wireNavReflection() {
     });
   });
 
+  window.addEventListener("hashchange", () => {
+    const sectionId = window.location.hash.replace(/^#/, "");
+    if (navTargets.some((section) => section.id === sectionId)) {
+      setActiveNav(sectionId);
+    }
+  });
+  if (window.location.hash) {
+    const sectionId = window.location.hash.replace(/^#/, "");
+    if (navTargets.some((section) => section.id === sectionId)) {
+      setActiveNav(sectionId);
+    }
+  }
+
   if (!("IntersectionObserver" in window)) return;
   const observer = new IntersectionObserver(
     (entries) => {
