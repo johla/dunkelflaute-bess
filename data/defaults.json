@@ -20,7 +20,9 @@
     "global_lithium_production_tonnes_2025": 290000.0,
     "global_battery_cell_manufacturing_capacity_twh_2024": 3.0,
     "committed_global_cell_capacity_twh_2030": 6.5,
-    "eu_bess_additions_gwh_2025": 27.1
+    "eu_bess_additions_gwh_2025": 27.1,
+    "power_capex_usd_per_kw": 0.0,
+    "epc_overhead_fraction": 0.0
   },
   "norwegian_anchors": {
     "household_kwh_per_year_2024": 14700.0,
@@ -29,7 +31,8 @@
     "statkraft_norway_twh_per_year_2025": 51.2,
     "norway_consumption_including_losses_twh_2025": 139.2,
     "norway_production_twh_2025": 162.0,
-    "norway_hydro_reservoir_capacity_twh": 87.0
+    "norway_hydro_reservoir_capacity_twh": 87.0,
+    "norway_sovereign_wealth_fund_nok_trillion": 19.7
   },
   "sources": [
     {
@@ -97,5 +100,11 @@
       "used_for": "Norsk vannkrafts magasinkapasitet, rundt 87 TWh",
       "url": "https://energifaktanorge.no/"
     }
-  ]
+  ],
+  "currency": {
+    "usd_to_nok": 10.5,
+    "label": "illustrative exchange rate",
+    "as_of": "2026-05",
+    "source": "manual assumption"
+  }
 }

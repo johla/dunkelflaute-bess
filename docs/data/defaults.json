@@ -13,6 +13,8 @@
     "usable_fraction": 0.8,
     "stationary_pack_cost_usd_per_kwh": 70.0,
     "turnkey_bess_cost_usd_per_kwh": 117.0,
+    "power_capex_usd_per_kw": 0.0,
+    "epc_overhead_fraction": 0.0,
     "lfp_share": 0.75,
     "sodium_ion_share": 0.15,
     "other_long_duration_share": 0.1,
@@ -29,6 +31,80 @@
     "statkraft_norway_twh_per_year_2025": 51.2,
     "norway_consumption_including_losses_twh_2025": 139.2,
     "norway_production_twh_2025": 162.0,
-    "norway_hydro_reservoir_capacity_twh": 87.0
+    "norway_hydro_reservoir_capacity_twh": 87.0,
+    "norway_sovereign_wealth_fund_nok_trillion": 19.7
+  },
+  "sources": [
+    {
+      "name": "Ember, European Electricity Review 2026",
+      "used_for": "EU 2025 fornybarandel og implisert totalproduksjon/last",
+      "url": "https://ember-energy.org/latest-insights/european-electricity-review-2026/2025-at-a-glance/"
+    },
+    {
+      "name": "IEA, Global EV Outlook 2025 – Electric vehicle batteries",
+      "used_for": "Global celleproduksjonskapasitet over 3 TWh i 2024, Kina-andel og 2030-kapasitet",
+      "url": "https://www.iea.org/reports/global-ev-outlook-2025/electric-vehicle-batteries"
+    },
+    {
+      "name": "SolarPower Europe, EU Battery Storage Market Review 2025",
+      "used_for": "EU installerte 27,1 GWh BESS i 2025",
+      "url": "https://www.solarpowereurope.org/insights/outlooks/eu-battery-storage-market-review-2025-1/detail"
+    },
+    {
+      "name": "BloombergNEF, Battery Price Survey 2025",
+      "used_for": "Stationary storage pack price omkring 70 USD/kWh i 2025",
+      "url": "https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/"
+    },
+    {
+      "name": "Energy-Storage.news om BNEF turnkey BESS-priser",
+      "used_for": "Global turnkey BESS-kost omkring 117 USD/kWh i 2025",
+      "url": "https://www.energy-storage.news/battery-storage-system-prices-continue-to-fall-sharply-bnef-and-ember-reports-find/"
+    },
+    {
+      "name": "USGS, Mineral Commodity Summaries 2026 – Lithium",
+      "used_for": "Global litiumproduksjon 2025, ca. 290 000 tonn ekskl. USA",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf"
+    },
+    {
+      "name": "ICCT, Expanding the lithium value chain in Chile",
+      "used_for": "LFP litiumintensitet, 0,09 kg Li/kWh",
+      "url": "https://theicct.org/wp-content/uploads/2025/10/ID-391-%E2%80%93-Chile-lithium_report_final-1.pdf"
+    },
+    {
+      "name": "IEA, Sodium-ion battery momentum grows, but challenges remain",
+      "used_for": "Natrium-ion som mulig diversifisering, men svært Kina-konsentrert pipeline",
+      "url": "https://www.iea.org/commentaries/sodium-ion-battery-momentum-grows-but-challenges-remain"
+    },
+    {
+      "name": "SSB tabell 14490",
+      "used_for": "Oslo og Bergen kommunes strømforbruk i 2024",
+      "url": "https://www.ssb.no/statbank/table/14490/"
+    },
+    {
+      "name": "SSB, strømforbruk i husholdninger",
+      "used_for": "Gjennomsnittlig norsk husholdningsforbruk rundt 14 700 kWh/år i 2024",
+      "url": "https://www.ssb.no/energi-og-industri/energi/statistikk/elektrisitet"
+    },
+    {
+      "name": "Statkraft årsrapport 2025",
+      "used_for": "Statkrafts produksjon i Norge, 51,2 TWh",
+      "url": "https://www.statkraft.no/"
+    },
+    {
+      "name": "Statnett, kraftsystemdata 2025",
+      "used_for": "Norsk strømproduksjon og forbruk inkl. tap i 2025",
+      "url": "https://www.statnett.no/"
+    },
+    {
+      "name": "NVE Energifakta Norge",
+      "used_for": "Norsk vannkrafts magasinkapasitet, rundt 87 TWh",
+      "url": "https://energifaktanorge.no/"
+    }
+  ],
+  "currency": {
+    "usd_to_nok": 10.5,
+    "label": "illustrative exchange rate",
+    "as_of": "2026-05",
+    "source": "manual assumption"
   }
 }

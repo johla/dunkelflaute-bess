@@ -8,11 +8,11 @@
       "explanation": "Kortvarig hendelse som delvis dekkes av import, regulerbar produksjon og fleksibilitet i forbruket."
     },
     {
-      "id": "base",
-      "name": "Repoets standardscenario",
+      "id": "stress_250gw_10d",
+      "name": "Stress-test: 250 GW i 10 døgn",
       "residual_gap_gw": 250,
       "event_days": 10,
-      "explanation": "Pedagogisk midtpunkt mellom korte og lange hendelser. Brukes som referanse i hovednotebooken."
+      "explanation": "Pedagogisk midtpunkt – 250 GW udekket effekt over 10 døgn. Ikke et forventet scenario, men et stresstestpunkt for å skalere problemet."
     },
     {
       "id": "severe",

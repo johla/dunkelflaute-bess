@@ -16,6 +16,8 @@ class BatteryScenario:
     usable_fraction: float = 0.80
     pack_cost_usd_per_kwh: float = 70.0
     turnkey_cost_usd_per_kwh: float = 117.0
+    power_capex_usd_per_kw: float = 0.0
+    epc_overhead_fraction: float = 0.0
     lfp_share: float = 0.75
     sodium_ion_share: float = 0.15
     other_long_duration_share: float = 0.10
@@ -43,7 +45,10 @@ def calculate(s: BatteryScenario) -> dict[str, float]:
     delivered_twh = s.residual_gap_gw * 24 * s.event_days / 1000
     installed_twh = delivered_twh / s.usable_fraction
     pack_cost_trillion_usd = installed_twh * s.pack_cost_usd_per_kwh / 1000
-    turnkey_cost_trillion_usd = installed_twh * s.turnkey_cost_usd_per_kwh / 1000
+    energy_cost_trillion_usd = installed_twh * s.turnkey_cost_usd_per_kwh / 1000
+    power_cost_trillion_usd = s.residual_gap_gw * 1_000_000 * s.power_capex_usd_per_kw / 1_000_000_000_000
+    equipment_cost = energy_cost_trillion_usd + power_cost_trillion_usd
+    turnkey_cost_trillion_usd = equipment_cost * (1 + s.epc_overhead_fraction)
 
     lfp_twh = installed_twh * lfp
     sodium_twh = installed_twh * sodium
@@ -62,6 +67,8 @@ def calculate(s: BatteryScenario) -> dict[str, float]:
         "delivered_energy_twh": delivered_twh,
         "installed_battery_twh": installed_twh,
         "pack_cost_trillion_usd": pack_cost_trillion_usd,
+        "energy_cost_trillion_usd": energy_cost_trillion_usd,
+        "power_cost_trillion_usd": power_cost_trillion_usd,
         "turnkey_cost_trillion_usd": turnkey_cost_trillion_usd,
         "lfp_twh": lfp_twh,
         "sodium_ion_twh": sodium_twh,

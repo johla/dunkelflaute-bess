@@ -33,7 +33,10 @@ function calculateScenario(s) {
   const installedTwh = deliveredTwh / s.usable_fraction;
 
   const packCostT = (installedTwh * s.stationary_pack_cost_usd_per_kwh) / 1000;
-  const turnkeyCostT = (installedTwh * s.turnkey_bess_cost_usd_per_kwh) / 1000;
+  const energyCostT = (installedTwh * s.turnkey_bess_cost_usd_per_kwh) / 1000;
+  const powerCostT = (s.residual_gap_gw * 1e6 * s.power_capex_usd_per_kw) / 1e12;
+  const equipmentCostT = energyCostT + powerCostT;
+  const turnkeyCostT = equipmentCostT * (1 + s.epc_overhead_fraction);
 
   const lfpTwh = installedTwh * mix.lfp;
   const sodiumTwh = installedTwh * mix.sodium;
@@ -46,6 +49,8 @@ function calculateScenario(s) {
     delivered_twh: deliveredTwh,
     installed_twh: installedTwh,
     pack_cost_trillion_usd: packCostT,
+    energy_cost_trillion_usd: energyCostT,
+    power_cost_trillion_usd: powerCostT,
     turnkey_cost_trillion_usd: turnkeyCostT,
     lfp_twh: lfpTwh,
     sodium_ion_twh: sodiumTwh,
@@ -92,6 +97,8 @@ const state = {
   usable_fraction: 0.8,
   stationary_pack_cost_usd_per_kwh: 70,
   turnkey_bess_cost_usd_per_kwh: 117,
+  power_capex_usd_per_kw: 0,
+  epc_overhead_fraction: 0,
   lfp_share: 0.75,
   sodium_ion_share: 0.15,
   other_long_duration_share: 0.10,
@@ -104,6 +111,10 @@ const state = {
 const MIX_KEYS = ["lfp_share", "sodium_ion_share", "other_long_duration_share"];
 const HEATMAP_GAPS = [50, 100, 150, 200, 250, 300, 400, 500];
 const HEATMAP_DAYS = [1, 3, 5, 7, 10, 14, 21];
+
+function usdToNok() {
+  return DEFAULTS?.currency?.usd_to_nok ?? 10.5;
+}
 const HEATMAP_AXIS_WIDTH = 64;
 const HEATMAP_HEADER_HEIGHT = 36;
 const HEATMAP_CELL_WIDTH = 96;
@@ -136,6 +147,8 @@ function syncSlidersFromState() {
   $("i-days").value = state.event_days;
   $("i-usable").value = Math.round(state.usable_fraction * 100);
   $("i-cost").value = state.turnkey_bess_cost_usd_per_kwh;
+  $("i-power-capex").value = state.power_capex_usd_per_kw;
+  $("i-epc").value = Math.round(state.epc_overhead_fraction * 100);
   $("i-lfp").value = Math.round(state.lfp_share * 100);
   $("i-sodium").value = Math.round(state.sodium_ion_share * 100);
   $("i-other").value = Math.round(state.other_long_duration_share * 100);
@@ -143,7 +156,9 @@ function syncSlidersFromState() {
   setText("v-gap", fmtInt(state.residual_gap_gw));
   setText("v-days", fmtInt(state.event_days));
   setText("v-usable", fmtInt(state.usable_fraction * 100));
-  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh));
+  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok()));
+  setText("v-power-capex", fmtInt(state.power_capex_usd_per_kw * usdToNok()));
+  setText("v-epc", fmtInt(state.epc_overhead_fraction * 100));
   setText("v-lfp", fmtInt(state.lfp_share * 100));
   setText("v-sodium", fmtInt(state.sodium_ion_share * 100));
   setText("v-other", fmtInt(state.other_long_duration_share * 100));
@@ -181,14 +196,15 @@ function renderResults(r) {
     `≈ ${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)} Oslo-år`
   );
   setText("r-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd)}`);
+  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd * usdToNok())}`);
+  setText("r-oil-fund", `≈ ${fmt(r.turnkey_cost_trillion_usd * usdToNok() / ANCHORS.norway_sovereign_wealth_fund_nok_trillion)} oljefond`);
   setText("r-cell-years", `${fmt(r.years_of_global_cell_capacity)}`);
   setText("r-eu-mult", `${fmtInt(r.multiples_of_2025_eu_bess_additions)}×`);
   setText("r-lithium", `${fmt(r.lithium_required_million_tonnes)}`);
   setText("f-installed", `${fmt(r.installed_twh)} TWh`);
   setText("f-oslo-years", `${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)}`);
   setText("f-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd)} bn USD`);
+  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK`);
   setText("f-cell-years", `${fmt(r.years_of_global_cell_capacity)} år`);
   setText("f-lithium", `${fmt(r.lithium_required_million_tonnes)} Mt`);
   renderAdvancedImpacts(r);
@@ -233,7 +249,7 @@ function renderGlideMap(r) {
 function renderAdvancedImpacts(r) {
   setText(
     "cost-impact",
-    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh)} USD/kWh gir ${fmt(r.turnkey_cost_trillion_usd)} billioner USD. Kost påvirker ikke levert eller installert TWh.`
+    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok())} NOK/kWh (energi-kapex, del av turnkey) gir ${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK. Effektkapex og EPC er valgfrie tilleggssensitiviteter.`
   );
   setText(
     "mix-impact",
@@ -434,9 +450,9 @@ function attackMetric(a, baseline, result) {
   if (patchKeys.some((key) => key.includes("turnkey_bess_cost_usd_per_kwh"))) {
     return {
       name: "Turnkey kost",
-      before: baseline.turnkey_cost_trillion_usd,
-      after: result.turnkey_cost_trillion_usd,
-      unit: "billioner USD"
+      before: baseline.turnkey_cost_trillion_usd * usdToNok(),
+      after: result.turnkey_cost_trillion_usd * usdToNok(),
+      unit: "billioner NOK"
     };
   }
   if (patchKeys.some((key) => key.includes("global_battery_cell_manufacturing_capacity"))) {
@@ -521,7 +537,9 @@ function wireSliders() {
     ["i-gap", "v-gap", (v) => { state.residual_gap_gw = +v; }, (v) => fmtInt(+v)],
     ["i-days", "v-days", (v) => { state.event_days = +v; }, (v) => fmtInt(+v)],
     ["i-usable", "v-usable", (v) => { state.usable_fraction = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v)]
+    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * usdToNok())],
+    ["i-power-capex", "v-power-capex", (v) => { state.power_capex_usd_per_kw = +v; }, (v) => fmtInt(+v * usdToNok())],
+    ["i-epc", "v-epc", (v) => { state.epc_overhead_fraction = +v / 100; }, (v) => fmtInt(+v)]
   ];
   for (const [inputId, valueId, setter, formatter] of map) {
     const inp = $(inputId);
@@ -552,9 +570,75 @@ function wireSliders() {
   $("btn-reset").addEventListener("click", () => {
     applyDefaults();
     syncSlidersFromState();
-    markActiveScenario("base");
+    updateGapBuilderDisplay();
+    markActiveScenario("stress_250gw_10d");
     recalc();
   });
+}
+
+// ---------- Gap builder ----------
+
+const gapBuilder = {
+  gross_load_gw: 500,
+  nuclear_gw: 100,
+  hydro_gw: 30,
+  gas_backup_gw: 40,
+  imports_gw: 30,
+  demand_response_gw: 30,
+  curtailment_gw: 10,
+  existing_storage_gw: 10
+};
+
+function computeGapFromBuilder() {
+  const reductions =
+    gapBuilder.nuclear_gw +
+    gapBuilder.hydro_gw +
+    gapBuilder.gas_backup_gw +
+    gapBuilder.imports_gw +
+    gapBuilder.demand_response_gw +
+    gapBuilder.curtailment_gw +
+    gapBuilder.existing_storage_gw;
+  return Math.max(0, gapBuilder.gross_load_gw - reductions);
+}
+
+function updateGapBuilderDisplay() {
+  setText("gb-result", fmtInt(computeGapFromBuilder()));
+}
+
+function applyGapBuilderToModel() {
+  const gap = computeGapFromBuilder();
+  state.residual_gap_gw = gap;
+  $("i-gap").value = gap;
+  setText("v-gap", fmtInt(gap));
+  markActiveScenario(null);
+  recalc();
+}
+
+function wireGapBuilder() {
+  const items = [
+    ["gb-gross", "v-gb-gross", (v) => { gapBuilder.gross_load_gw = +v; }],
+    ["gb-nuclear", "v-gb-nuclear", (v) => { gapBuilder.nuclear_gw = +v; }],
+    ["gb-hydro", "v-gb-hydro", (v) => { gapBuilder.hydro_gw = +v; }],
+    ["gb-backup", "v-gb-backup", (v) => { gapBuilder.gas_backup_gw = +v; }],
+    ["gb-imports", "v-gb-imports", (v) => { gapBuilder.imports_gw = +v; }],
+    ["gb-dr", "v-gb-dr", (v) => { gapBuilder.demand_response_gw = +v; }],
+    ["gb-curtail", "v-gb-curtail", (v) => { gapBuilder.curtailment_gw = +v; }],
+    ["gb-storage", "v-gb-storage", (v) => { gapBuilder.existing_storage_gw = +v; }]
+  ];
+  for (const [inputId, valueId, setter] of items) {
+    const inp = $(inputId);
+    if (!inp) continue;
+    inp.addEventListener("input", () => {
+      setter(inp.value);
+      setText(valueId, fmtInt(+inp.value));
+      updateGapBuilderDisplay();
+    });
+  }
+
+  const applyBtn = $("gb-apply");
+  if (applyBtn) {
+    applyBtn.addEventListener("click", applyGapBuilderToModel);
+  }
 }
 
 function setActiveNav(sectionId) {
@@ -638,7 +722,8 @@ async function init() {
         statkraft_norway_twh_per_year_2025: 51.2,
         norway_consumption_including_losses_twh_2025: 139.2,
         norway_production_twh_2025: 162.0,
-        norway_hydro_reservoir_capacity_twh: 87.0
+        norway_hydro_reservoir_capacity_twh: 87.0,
+        norway_sovereign_wealth_fund_nok_trillion: 19.7
       }
     };
     ANCHORS = DEFAULTS.norwegian_anchors;
@@ -648,11 +733,13 @@ async function init() {
   applyDefaults();
   syncSlidersFromState();
   wireSliders();
+  wireGapBuilder();
+  updateGapBuilderDisplay();
   renderScenarioButtons();
   renderAttacks();
   renderGlossary();
   wireNavReflection();
-  markActiveScenario("base");
+  markActiveScenario("stress_250gw_10d");
   recalc();
 }
 
