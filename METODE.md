@@ -48,9 +48,9 @@ Begrunnelsen er at `GW × døgn` dominerer resultatet. Kjemivalg og kost er neds
 
 Modellen er laget for å være mulig å angripe. Den er ikke et argument for eller mot batterier. En relevant kritikk vil typisk endre én av disse antakelsene:
 
-- residual effektmangel under hendelsen
+- effektgap under hendelsen
 - varighet og sannsynlighet for hendelsen
-- tilgjengelig regulerbar produksjon, import og fleksibilitet som reduserer residualgapet
+- tilgjengelig regulerbar produksjon, import og fleksibilitet som reduserer effektgapet
 - relevant batterikost for multi-døgn lagring
 - forsyningskjede og produksjonstakt for valgt kjemi
 - alternativverdien av samme kapital i nett, vannkraft, termisk eller kjemisk reserve, eller i etterspørselsrespons

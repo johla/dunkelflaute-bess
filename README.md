@@ -37,12 +37,12 @@ Denne rekkefølgen er viktig. Den hindrer at diskusjonen begynner med teknologio
 Notebooken lar deg variere:
 
 - varighet på hendelsen i døgn
-- residual effektmangel i GW etter kjernekraft, vannkraft, import, termisk backup, etterspørselsrespons osv.
+- effektgap i GW etter kjernekraft, vannkraft, import, termisk backup, etterspørselsrespons osv.
 - utnyttbar andel av installert batterikapasitet
-- kost per kWh for pakke og turnkey BESS
+- kost per kWh for pakke og ferdig installert batterilager (BESS)
 - kjemimiksen: LFP, natrium-ion og andre langtidslagringsbatterier
 - global produksjonskapasitet for battericeller
-- EU-installasjonstakt for BESS
+- EU-installasjonstakt for batterilager (BESS)
 - litiumintensitet for LFP
 
 ## Viktig tolkning
@@ -51,7 +51,7 @@ Dette er ikke et argument mot batterier. Batterier er svært nyttige for frekven
 
 Spørsmålet her er snevrere: **er batterier alene en rasjonell løsning for kontinental, flerdagers Dunkelflaute?**
 
-Standardverdiene peker mot svaret: sannsynligvis nei. Når hendelsen går fra timer til flere døgn, flytter problemet seg fra vanlig BESS til strategisk energilager, fleksibilitet, overføringsnett, regulerbar produksjon, vannmagasiner, hydrogen/metan/ammoniakk, termisk backup og etterspørselsstyring.
+Standardverdiene peker mot svaret: sannsynligvis nei. Når hendelsen går fra timer til flere døgn, flytter problemet seg fra ordinært batterilager til strategisk energilager, fleksibilitet, overføringsnett, regulerbar produksjon, vannmagasiner, hydrogen/metan/ammoniakk, termisk backup og etterspørselsstyring.
 
 ## Energi og effekt
 
@@ -185,12 +185,12 @@ De viktigste standardverdiene er hentet fra offentlige kilder og kan endres i `d
 |---|---:|---|
 | EU total elektrisitet | 2 790 TWh/år | Implisert fra Ember: 1 331 TWh fornybart = 47,7 % i 2025 |
 | EU snittlast | 318 GW | 2 790 TWh / 8 760 timer |
-| Residual effektmangel | 250 GW | Modellantakelse, ikke kildeverdi |
+| Effektgap | 250 GW | Modellantakelse, ikke kildeverdi |
 | Hendelsesvarighet | 10 døgn | Modellantakelse |
 | Utnyttbar batteriandel | 80 % | Drift/reserve/degradering/margin |
 | Stationary pack cost | 70 USD/kWh | BNEF 2025 |
-| Turnkey BESS cost | 117 USD/kWh | BNEF omtalt av Energy-Storage.news |
-| EU BESS-tilvekst 2025 | 27,1 GWh | SolarPower Europe |
+| Ferdig installert batterikostnad | 117 USD/kWh | BNEF omtalt av Energy-Storage.news |
+| EU batterilager-tilvekst 2025 | 27,1 GWh | SolarPower Europe |
 | Global cellekapasitet 2024 | >3 TWh/år | IEA |
 | Global litiumproduksjon 2025 | ca. 290 000 tonn | USGS, ekskl. USA |
 | LFP litiumintensitet | 0,09 kg Li/kWh | ICCT |

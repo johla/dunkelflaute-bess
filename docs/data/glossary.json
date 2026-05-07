@@ -5,8 +5,8 @@
       "definition": "Tysk for «mørk vindstille». En periode der både vind- og solproduksjon er lav over store geografiske områder samtidig, ofte i forbindelse med vinterhøytrykk. Kan vare fra noen timer til 1–2 uker."
     },
     {
-      "term": "Residual effektmangel",
-      "definition": "Det som blir igjen av etterspørselen etter at all annen produksjon (kjernekraft, vannkraft, import, termisk backup, fleksibelt forbruk osv.) er trukket fra. Måles i GW."
+      "term": "Effektgap",
+      "definition": "Udekket effektbehov etter at tilgjengelig produksjon, import, backup og fleksibelt forbruk er trukket fra. Måles i GW."
     },
     {
       "term": "Effekt vs. energi",
@@ -21,16 +21,16 @@
       "definition": "Andelen av installert batterikapasitet som faktisk kan leveres til nettet etter reserve, degradering og driftsmargin. Standardverdi 80 %."
     },
     {
-      "term": "BESS",
-      "definition": "Battery Energy Storage System. Stasjonært batterilager, typisk LFP i dag, med varigheter på 2–8 timer."
+      "term": "Batterilager (BESS)",
+      "definition": "Stasjonært batterilager for kraftsystemet. BESS står for Battery Energy Storage System. Brukes typisk til frekvensrespons, reserve og flytting av energi over timer."
     },
     {
       "term": "LFP",
       "definition": "Litium-jern-fosfat. Dominerende kjemi i stasjonær batterilagring i 2025 på grunn av lav kost og lang sykluslevetid."
     },
     {
-      "term": "Turnkey BESS-kost",
-      "definition": "Pris for ferdig installert batterisystem inkl. inverter, montasje og nettilknytning. BNEF-tall for 2025: ca. 117 USD/kWh (≈ 1 230 NOK/kWh)."
+      "term": "Ferdig installert batterikostnad",
+      "definition": "Kostnad for et komplett installert batterisystem, oppgitt per kWh lagringskapasitet. Inkluderer normalt mer enn bare battericeller."
     }
   ]
 }

@@ -15,7 +15,7 @@ Denne siden forklarer termer, forkortelser og enheter som brukes i hovednotebook
 **Dunkelflaute** *(tysk: «mørk vindstille»)*
 En periode der både vind- og solproduksjon er lav over store geografiske områder samtidig, ofte i forbindelse med vinterhøytrykk. Kan vare fra noen timer til 1–2 uker. Begrepet brukes bredt i tysk og europeisk kraftdebatt og har ikke noe etablert norsk synonym.
 
-**Residual effektmangel** *(residual gap)*
+**Effektgap** *(residual gap)*
 Det som blir igjen av etterspørselen etter at all annen produksjon (kjernekraft, vannkraft, import, termisk backup, fleksibelt forbruk osv.) er trukket fra. Det er **denne** mangelen et batterilager må dekke — ikke total last. Måles i GW.
 
 **Hendelsens varighet** *(event duration)*
@@ -50,7 +50,7 @@ Total årlig elektrisitet delt på 8 760 timer. EU ligger rundt 318 GW snittlast
 
 ## Batterier og lager
 
-**BESS** — *Battery Energy Storage System*
+**Batterilager (BESS)** — *Battery Energy Storage System*
 Stasjonært batterilager koblet til strømnettet. Inkluderer celler, inverter, transformator, kjøling, brannvern og kontrollsystem.
 
 **LFP** — *Lithium Iron Phosphate (LiFePO₄)*
@@ -65,7 +65,7 @@ Battericelle som bruker natrium i stedet for litium. Lavere energitetthet, men s
 **Pakke-kost** *(stationary pack cost)*
 Pris for selve battericellene/-pakken, uten resten av systemet. BNEF rapporterte ca. 70 USD/kWh i 2025.
 
-**Turnkey-kost** *(turnkey BESS cost)*
+**Ferdig installert batterikostnad** *(turnkey BESS cost)*
 Total leveringspris for et ferdig installert batterianlegg, inkl. inverter, trafo, kontrollsystem, brann/kjøling, EPC-arbeid og nettilknytning. BNEF rapporterte ca. 117 USD/kWh i 2025.
 
 **Utnyttbar andel** *(usable fraction)*
@@ -169,7 +169,7 @@ Når samme batterianlegg tjener penger på flere markeder samtidig — f.eks. fr
 
 ---
 
-## BESS-komponenter (system-nivå)
+## Batterilager-komponenter (system-nivå)
 
 **Celle / modul / rack / pack**
 Hierarkiet i et batterisystem: celler kobles i moduler, moduler i racks, racks i en pakke (pack) eller container.
@@ -199,7 +199,7 @@ Hvor mye litium en celletype trenger per kWh, oppgitt i kg Li/kWh. ICCT anslår 
 **Cellekapasitet** *(global cell manufacturing capacity)*
 Hvor mye battericelle-produksjon (i TWh/år) som finnes globalt. IEA: over 3 TWh/år i 2024, ca. 6,5 TWh/år forpliktet mot 2030.
 
-**EU BESS-tilvekst** *(annual additions)*
+**EU batterilager-tilvekst** *(annual additions)*
 Hvor mye nytt stasjonært batterilager som installeres i EU per år. SolarPower Europe: 27,1 GWh i 2025.
 
 **USGS / Ember / IEA / BNEF / NREL ATB / ICCT / NVE / JRC PECDEC / IHA**

@@ -249,7 +249,7 @@ function renderGlideMap(r) {
 function renderAdvancedImpacts(r) {
   setText(
     "cost-impact",
-    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok())} NOK/kWh (energi-kapex, del av turnkey) gir ${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK. Effektkapex og EPC er valgfrie tilleggssensitiviteter.`
+    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok())} NOK/kWh (kostnad per kWh lagringskapasitet) gir ${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK. Kostnad per kW leveringseffekt og prosjektpåslag er valgfrie tilleggssensitiviteter.`
   );
   setText(
     "mix-impact",
@@ -449,7 +449,7 @@ function attackMetric(a, baseline, result) {
   const patchKeys = Object.keys(a.patch || {});
   if (patchKeys.some((key) => key.includes("turnkey_bess_cost_usd_per_kwh"))) {
     return {
-      name: "Turnkey kost",
+      name: "Ferdig installert kostnad",
       before: baseline.turnkey_cost_trillion_usd * usdToNok(),
       after: result.turnkey_cost_trillion_usd * usdToNok(),
       unit: "billioner NOK"
