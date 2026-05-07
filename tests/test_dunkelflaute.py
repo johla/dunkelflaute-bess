@@ -57,3 +57,12 @@ def test_docs_defaults_contains_sources():
     data = json.loads(Path("docs/data/defaults.json").read_text(encoding="utf-8"))
     assert "sources" in data
     assert len(data["sources"]) > 0
+
+
+def test_root_and_docs_defaults_share_core_fields():
+    root = json.loads(Path("data/defaults.json").read_text(encoding="utf-8"))
+    docs = json.loads(Path("docs/data/defaults.json").read_text(encoding="utf-8"))
+
+    assert root["defaults"].keys() <= docs["defaults"].keys()
+    assert root["norwegian_anchors"].keys() <= docs["norwegian_anchors"].keys()
+    assert root["currency"] == docs["currency"]
