@@ -188,7 +188,7 @@ function renderResults(r) {
   setText("f-installed", `${fmt(r.installed_twh)} TWh`);
   setText("f-oslo-years", `${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)}`);
   setText("f-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd)} bn USD`);
+  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd)} billioner USD`);
   setText("f-cell-years", `${fmt(r.years_of_global_cell_capacity)} år`);
   setText("f-lithium", `${fmt(r.lithium_required_million_tonnes)} Mt`);
   renderAdvancedImpacts(r);
