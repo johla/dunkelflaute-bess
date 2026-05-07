@@ -75,7 +75,7 @@
     {
       "id": "severe",
       "name": "Alvorlig flerdagershendelse",
-      "explanation": "Stort residualt gap over to uker. Flytter problemet fra ordinær BESS til strategisk energilager.",
+      "explanation": "Stort udekket effektbehov over to uker. Flytter problemet fra ordinært batterilager til strategisk energilager.",
       "inputs": {
         "residual_gap_gw": 350.0,
         "event_days": 14.0,

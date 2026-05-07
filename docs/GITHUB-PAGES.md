@@ -42,7 +42,7 @@ That is the “oh shit” moment. Everything else supports it.
 Inputs:
 
 ```txt
-Residual effektmangel: 250 GW
+Effektgap: 250 GW
 Varighet: 10 døgn
 Utnyttbar andel: 80 %
 Batterikost: 117 USD/kWh
@@ -56,9 +56,9 @@ Outputs as cards:
 ```txt
 Levert energi: 60 TWh
 Installert batteri: 75 TWh
-Turnkey kost: 8,8 billioner USD
+Ferdig installert kostnad: 8,8 billioner USD
 År av global cellekapasitet: 25 år
-År av EU BESS-installasjoner: 2768 år
+År av EU batterilager-installasjoner: 2768 år
 Litiumbehov: 5,1 millioner tonn
 ```
 
@@ -122,7 +122,7 @@ Uenig? Endre én antakelse.
 With buttons:
 
 ```txt
-Halver residualgapet
+Halver effektgapet
 Halver varigheten
 Anta 50 % lavere kost
 Anta 3× global cellekapasitet

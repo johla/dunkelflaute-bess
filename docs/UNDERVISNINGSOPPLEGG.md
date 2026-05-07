@@ -10,7 +10,7 @@ Etter å ha gjennomgått opplegget skal en deltaker kunne:
 
 1. regne om fra **GW × døgn** til **TWh** uten å blande effekt og energi
 2. forklare hvorfor flerdagers energireserve er en annen problemklasse enn vanlig BESS for korttidsfleksibilitet
-3. teste hvordan konklusjonen flytter seg når residual effektmangel, varighet og utnyttbar kapasitet endres
+3. teste hvordan konklusjonen flytter seg når effektgap, varighet og utnyttbar kapasitet endres
 4. skille mellom det batterikjemi som natrium-ion kan forbedre (materialrisiko, geografisk konsentrasjon) og det kjemien ikke endrer (`GW × døgn`)
 5. plassere et resultat i riktig regime: BESS-skala, kontinentalt lagerprogram, industriell mobilisering eller strategisk energireserve
 
@@ -38,7 +38,7 @@ Opplegget kan kjøres som én sammenhengende økt på omtrent to timer, eller de
 
 ### Del 2 — Én parameter om gangen (ca. 30 min)
 
-- Endre **kun** residual effektmangel og se hvordan installert TWh og kapitalbinding endres.
+- Endre **kun** effektgap og se hvordan installert TWh og kapitalbinding endres.
 - Tilbakestill og endre **kun** varighet.
 - Tilbakestill og endre **kun** utnyttbar andel.
 - Diskutér hvilken av de tre som flytter resultatet mest, og hvorfor.

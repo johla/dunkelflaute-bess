@@ -23,7 +23,7 @@
 
 <main id="top">
 
-  <aside class="floating-results" aria-label="Live resultater">
+  <aside class="floating-results" aria-label="Oppdaterte resultater">
     <div class="floating-results-inner container-wide">
       <div class="floating-tile emphasis">
         <span>Installert</span>
@@ -84,7 +84,7 @@
       <span class="label">Standardresultat</span>
       <h2>Det første regnestykket</h2>
       <p class="lead muted">
-        Repoets standardscenario: 250 GW residual effektmangel i 10 døgn,
+        Repoets standardscenario: 250 GW effektgap i 10 døgn,
         80 % utnyttbar batteriandel. Endre tallene under for å se hvordan
         konklusjonen flytter seg.
       </p>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="result-card secondary">
-          <span class="label">Turnkey kost</span>
+          <span class="label">Ferdig installert kostnad</span>
           <div class="number" id="r-cost">–</div>
           <div class="interp">billioner NOK ferdig installert.</div>
           <div class="interp" id="r-oil-fund">–</div>
@@ -117,7 +117,7 @@
         </div>
 
         <div class="result-card secondary">
-          <span class="label">Multipler av EU 2025 BESS-tilvekst</span>
+          <span class="label">Multipler av EU 2025 batterilager-tilvekst</span>
           <div class="number" id="r-eu-mult">–</div>
           <div class="interp">Hvor mange ganger 2025-takten må gjentas.</div>
         </div>
@@ -125,7 +125,7 @@
         <div class="result-card secondary">
           <span class="label">Litiumbehov</span>
           <div class="number" id="r-lithium">–</div>
-          <div class="interp">millioner tonn lithium-metall til LFP-andelen.</div>
+          <div class="interp">millioner tonn litium-metall til LFP-andelen.</div>
         </div>
       </div>
     </div>
@@ -152,18 +152,18 @@
 
           <div class="slider-row">
             <div class="slider-head">
-              <label class="name" for="i-gap">Residual effektmangel</label>
+              <label class="name" for="i-gap">Effektgap</label>
               <span class="value"><span id="v-gap">250</span> GW</span>
             </div>
-            <p class="explain" id="d-gap">Det som blir igjen etter kjernekraft, vannkraft, import og fleksibilitet.</p>
+            <p class="explain" id="d-gap">Udekket effektbehov etter tilgjengelig produksjon, import, reservekapasitet og fleksibilitet.</p>
             <input type="range" id="i-gap" min="50" max="500" step="10" value="250" aria-describedby="d-gap" />
             <div class="range-meta"><span>50 GW</span><span>500 GW</span></div>
           </div>
 
           <details class="advanced" id="gap-builder">
-            <summary>Bygg residualgapet komponent for komponent</summary>
+            <summary>Bygg effektgapet komponent for komponent</summary>
             <div class="advanced-body">
-              <p class="explain">Trekk tilgjengelige ressurser fra bruttolast. Bruk knappen under for å sende beregnet residualgap til hovedmodellen.</p>
+              <p class="explain">Trekk tilgjengelige ressurser fra bruttolast. Bruk knappen under for å sende beregnet effektgap til hovedmodellen.</p>
 
               <div class="slider-row">
                 <div class="slider-head">
@@ -191,7 +191,7 @@
               </div>
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="gb-backup">Gass / H₂ / bio backup</label>
+                  <label class="name" for="gb-backup">Gass / H₂ / bio reservekraft</label>
                   <span class="value">− <span id="v-gb-backup">40</span> GW</span>
                 </div>
                 <input type="range" id="gb-backup" min="0" max="200" step="5" value="40" />
@@ -215,7 +215,7 @@
               </div>
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="gb-curtail">Industriell kurtasje</label>
+                  <label class="name" for="gb-curtail">Industriell forbruksreduksjon</label>
                   <span class="value">− <span id="v-gb-curtail">10</span> GW</span>
                 </div>
                 <input type="range" id="gb-curtail" min="0" max="100" step="5" value="10" />
@@ -231,9 +231,9 @@
               </div>
 
               <div class="impact-note" aria-live="polite">
-                <strong>Beregnet residualgap: <span id="gb-result">250</span> GW</strong>
-                <p class="small">Dette er en separat beregning til du klikker «Bruk dette residualgapet».</p>
-                <button type="button" class="btn btn-secondary" id="gb-apply">Bruk dette residualgapet</button>
+                <strong>Beregnet effektgap: <span id="gb-result">250</span> GW</strong>
+                <p class="small">Dette er en separat beregning til du klikker «Bruk dette effektgapet».</p>
+                <button type="button" class="btn btn-secondary" id="gb-apply">Bruk dette effektgapet</button>
               </div>
             </div>
           </details>
@@ -264,30 +264,30 @@
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-cost">Energi-kapex (del av turnkey-estimat)</label>
+                  <label class="name" for="i-cost">Kostnad per kWh lagringskapasitet</label>
                   <span class="value"><span id="v-cost">1 228</span> NOK/kWh</span>
                 </div>
-                <p class="explain" id="d-cost">Energikomponent av kost (USD/kWh), brukt som base i turnkey-estimatet.</p>
+                <p class="explain" id="d-cost">Ferdig installert kostnad per kWh lagringskapasitet (USD/kWh). BNEF: ca. 117 USD/kWh i 2025.</p>
                 <input type="range" id="i-cost" min="40" max="250" step="1" value="117" aria-describedby="d-cost cost-impact" />
                 <div class="range-meta"><span>420</span><span>2 625</span></div>
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-power-capex">Ekstra effektkapex (valgfri sensitivitet)</label>
+                  <label class="name" for="i-power-capex">Ekstra kostnad per kW leveringseffekt</label>
                   <span class="value"><span id="v-power-capex">0</span> NOK/kW</span>
                 </div>
-                <p class="explain" id="d-power-capex">Valgfritt tillegg utover turnkey-estimatet for ekstra effektinfrastruktur (kraftelektronikk/nett).</p>
+                <p class="explain" id="d-power-capex">Valgfritt tillegg for ekstra effektinfrastruktur (kraftelektronikk/nett), oppgitt per kW leveringseffekt.</p>
                 <input type="range" id="i-power-capex" min="0" max="200" step="5" value="0" aria-describedby="d-power-capex cost-impact" />
                 <div class="range-meta"><span>0</span><span>2 100</span></div>
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-epc">Ekstra EPC/contingency (valgfri sensitivitet)</label>
+                  <label class="name" for="i-epc">Ekstra prosjekt- og usikkerhetspåslag</label>
                   <span class="value"><span id="v-epc">0</span> %</span>
                 </div>
-                <p class="explain" id="d-epc">Valgfritt prosentpåslag på summen av energi- og effektkost for scenario-sensitivitet.</p>
+                <p class="explain" id="d-epc">Valgfritt prosentpåslag på summen av energi- og effektkost for prosjektkostnader og usikkerhet.</p>
                 <input type="range" id="i-epc" min="0" max="30" step="1" value="0" aria-describedby="d-epc cost-impact" />
                 <div class="range-meta"><span>0 %</span><span>30 %</span></div>
               </div>
@@ -342,10 +342,10 @@
           </div>
         </div>
 
-        <div class="calc-panel" aria-label="Heatmap: gap × varighet">
-          <h3>Gap × varighet → installert TWh</h3>
+        <div class="calc-panel" aria-label="Fargekart: effektgap × varighet">
+          <h3>Fargekart: effektgap × varighet</h3>
           <p class="small">
-            Rad = varighet (døgn), kolonne = residual effektmangel (GW).
+            Rad = varighet (døgn), kolonne = effektgap (GW).
             Cellen viser installert TWh ved nåværende utnyttbar andel.
             Det glidende punktet under følger sliderne mellom tabellverdiene.
           </p>
@@ -355,7 +355,7 @@
           </div>
           <div class="heatmap-wrap">
             <div class="heatmap-stage">
-              <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
+              <div class="heatmap" id="heatmap" role="table" aria-label="Fargekart"></div>
               <div class="heatmap-glide-marker" id="glide-marker" aria-hidden="true">
                 <span id="glide-marker-value">75 TWh</span>
               </div>
@@ -402,7 +402,7 @@
       <h2>Batterier er nyttige — men til hva?</h2>
       <div class="two-col">
         <div class="col-card">
-          <h3>Hva BESS er svært bra for</h3>
+          <h3>Hva batterilager (BESS) er svært bra for</h3>
           <p>
             Frekvensrespons, intra-dag-utjevning, reserve på minutter til timer,
             prisarbitrasje, nettavlastning og integrasjon av sol og vind.
@@ -416,7 +416,7 @@
             flerdagers Dunkelflaute. Når hendelsen går fra timer til døgn,
             flytter problemet seg til strategisk energilager, fleksibilitet,
             overføringsnett, regulerbar produksjon, vannmagasiner,
-            hydrogen/metan/ammoniakk og termisk backup.
+            hydrogen/metan/ammoniakk og termisk reserve.
           </p>
           <p class="small">Typiske varigheter: 50–250 timer.</p>
         </div>

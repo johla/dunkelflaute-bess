@@ -9,24 +9,24 @@
     },
     {
       "id": "stress_250gw_10d",
-      "name": "Stress-test: 250 GW i 10 døgn",
+      "name": "Stresstest: 250 GW i 10 døgn",
       "residual_gap_gw": 250,
       "event_days": 10,
-      "explanation": "Pedagogisk midtpunkt – 250 GW udekket effekt over 10 døgn. Ikke et forventet scenario, men et stresstestpunkt for å skalere problemet."
+      "explanation": "Pedagogisk stresstest – 250 GW udekket effektbehov over 10 døgn. Ikke et forventet scenario, men et punkt for å skalere problemet."
     },
     {
       "id": "severe",
       "name": "Alvorlig flerdagershendelse",
       "residual_gap_gw": 350,
       "event_days": 14,
-      "explanation": "Stort residualt gap over to uker. Flytter problemet fra ordinær BESS til strategisk energilager."
+      "explanation": "Stort udekket effektbehov over to uker. Flytter problemet fra ordinært batterilager til strategisk energilager."
     }
   ],
   "attacks": [
     {
       "id": "halve_gap",
-      "label": "Halver residualgapet",
-      "description": "Anta at andre kilder dekker dobbelt så mye av effekten.",
+      "label": "Halver effektgapet",
+      "description": "Anta at andre kilder dekker dobbelt så mye av den manglende effekten.",
       "patch": { "residual_gap_gw_factor": 0.5 }
     },
     {
@@ -38,7 +38,7 @@
     {
       "id": "halve_cost",
       "label": "Anta 50 % lavere kost",
-      "description": "Anta at turnkey BESS-pris er halvert.",
+      "description": "Anta at ferdig installert batterikostnad er halvert.",
       "patch": { "turnkey_bess_cost_usd_per_kwh_factor": 0.5 }
     },
     {
