@@ -104,6 +104,9 @@ const state = {
 const MIX_KEYS = ["lfp_share", "sodium_ion_share", "other_long_duration_share"];
 const HEATMAP_GAPS = [50, 100, 150, 200, 250, 300, 400, 500];
 const HEATMAP_DAYS = [1, 3, 5, 7, 10, 14, 21];
+
+// Omregningsfaktor USD → NOK (representativ kurs)
+const USD_TO_NOK = 10.5;
 const HEATMAP_AXIS_WIDTH = 64;
 const HEATMAP_HEADER_HEIGHT = 36;
 const HEATMAP_CELL_WIDTH = 96;
@@ -143,7 +146,7 @@ function syncSlidersFromState() {
   setText("v-gap", fmtInt(state.residual_gap_gw));
   setText("v-days", fmtInt(state.event_days));
   setText("v-usable", fmtInt(state.usable_fraction * 100));
-  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh));
+  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh * USD_TO_NOK));
   setText("v-lfp", fmtInt(state.lfp_share * 100));
   setText("v-sodium", fmtInt(state.sodium_ion_share * 100));
   setText("v-other", fmtInt(state.other_long_duration_share * 100));
@@ -181,14 +184,15 @@ function renderResults(r) {
     `≈ ${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)} Oslo-år`
   );
   setText("r-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd)}`);
+  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)}`);
+  setText("r-oil-fund", `≈ ${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK / ANCHORS.norway_sovereign_wealth_fund_nok_trillion)} oljefond`);
   setText("r-cell-years", `${fmt(r.years_of_global_cell_capacity)}`);
   setText("r-eu-mult", `${fmtInt(r.multiples_of_2025_eu_bess_additions)}×`);
   setText("r-lithium", `${fmt(r.lithium_required_million_tonnes)}`);
   setText("f-installed", `${fmt(r.installed_twh)} TWh`);
   setText("f-oslo-years", `${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)}`);
   setText("f-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd)} billioner USD`);
+  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)} billioner NOK`);
   setText("f-cell-years", `${fmt(r.years_of_global_cell_capacity)} år`);
   setText("f-lithium", `${fmt(r.lithium_required_million_tonnes)} Mt`);
   renderAdvancedImpacts(r);
@@ -233,7 +237,7 @@ function renderGlideMap(r) {
 function renderAdvancedImpacts(r) {
   setText(
     "cost-impact",
-    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh)} USD/kWh gir ${fmt(r.turnkey_cost_trillion_usd)} billioner USD. Kost påvirker ikke levert eller installert TWh.`
+    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * USD_TO_NOK)} NOK/kWh gir ${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)} billioner NOK. Kost påvirker ikke levert eller installert TWh.`
   );
   setText(
     "mix-impact",
@@ -434,9 +438,9 @@ function attackMetric(a, baseline, result) {
   if (patchKeys.some((key) => key.includes("turnkey_bess_cost_usd_per_kwh"))) {
     return {
       name: "Turnkey kost",
-      before: baseline.turnkey_cost_trillion_usd,
-      after: result.turnkey_cost_trillion_usd,
-      unit: "billioner USD"
+      before: baseline.turnkey_cost_trillion_usd * USD_TO_NOK,
+      after: result.turnkey_cost_trillion_usd * USD_TO_NOK,
+      unit: "billioner NOK"
     };
   }
   if (patchKeys.some((key) => key.includes("global_battery_cell_manufacturing_capacity"))) {
@@ -521,7 +525,7 @@ function wireSliders() {
     ["i-gap", "v-gap", (v) => { state.residual_gap_gw = +v; }, (v) => fmtInt(+v)],
     ["i-days", "v-days", (v) => { state.event_days = +v; }, (v) => fmtInt(+v)],
     ["i-usable", "v-usable", (v) => { state.usable_fraction = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v)]
+    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * USD_TO_NOK)]
   ];
   for (const [inputId, valueId, setter, formatter] of map) {
     const inp = $(inputId);
@@ -638,7 +642,8 @@ async function init() {
         statkraft_norway_twh_per_year_2025: 51.2,
         norway_consumption_including_losses_twh_2025: 139.2,
         norway_production_twh_2025: 162.0,
-        norway_hydro_reservoir_capacity_twh: 87.0
+        norway_hydro_reservoir_capacity_twh: 87.0,
+        norway_sovereign_wealth_fund_nok_trillion: 19.7
       }
     };
     ANCHORS = DEFAULTS.norwegian_anchors;
