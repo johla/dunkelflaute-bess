@@ -23,7 +23,7 @@
 
 <main id="top">
 
-  <aside class="floating-results" aria-label="Live resultater">
+  <aside class="floating-results" aria-label="Oppdaterte resultater">
     <div class="floating-results-inner container-wide">
       <div class="floating-tile emphasis">
         <span>Installert</span>
@@ -155,7 +155,7 @@
               <label class="name" for="i-gap">Effektgap</label>
               <span class="value"><span id="v-gap">250</span> GW</span>
             </div>
-            <p class="explain" id="d-gap">Udekket effektbehov etter tilgjengelig produksjon, import, backup og fleksibilitet.</p>
+            <p class="explain" id="d-gap">Udekket effektbehov etter tilgjengelig produksjon, import, reserve og fleksibilitet.</p>
             <input type="range" id="i-gap" min="50" max="500" step="10" value="250" aria-describedby="d-gap" />
             <div class="range-meta"><span>50 GW</span><span>500 GW</span></div>
           </div>
@@ -191,7 +191,7 @@
               </div>
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="gb-backup">Gass / H₂ / bio backup</label>
+                  <label class="name" for="gb-backup">Gass / H₂ / bio reserve</label>
                   <span class="value">− <span id="v-gb-backup">40</span> GW</span>
                 </div>
                 <input type="range" id="gb-backup" min="0" max="200" step="5" value="40" />
@@ -342,8 +342,8 @@
           </div>
         </div>
 
-        <div class="calc-panel" aria-label="Heatmap: gap × varighet">
-          <h3>Gap × varighet → installert TWh</h3>
+        <div class="calc-panel" aria-label="Fargekart: effektgap × varighet">
+          <h3>Fargekart: effektgap × varighet</h3>
           <p class="small">
             Rad = varighet (døgn), kolonne = effektgap (GW).
             Cellen viser installert TWh ved nåværende utnyttbar andel.
@@ -355,7 +355,7 @@
           </div>
           <div class="heatmap-wrap">
             <div class="heatmap-stage">
-              <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap"></div>
+              <div class="heatmap" id="heatmap" role="table" aria-label="Fargekart"></div>
               <div class="heatmap-glide-marker" id="glide-marker" aria-hidden="true">
                 <span id="glide-marker-value">75 TWh</span>
               </div>
@@ -416,7 +416,7 @@
             flerdagers Dunkelflaute. Når hendelsen går fra timer til døgn,
             flytter problemet seg til strategisk energilager, fleksibilitet,
             overføringsnett, regulerbar produksjon, vannmagasiner,
-            hydrogen/metan/ammoniakk og termisk backup.
+            hydrogen/metan/ammoniakk og termisk reserve.
           </p>
           <p class="small">Typiske varigheter: 50–250 timer.</p>
         </div>

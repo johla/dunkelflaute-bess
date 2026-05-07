@@ -16,7 +16,7 @@ Denne siden forklarer termer, forkortelser og enheter som brukes i hovednotebook
 En periode der både vind- og solproduksjon er lav over store geografiske områder samtidig, ofte i forbindelse med vinterhøytrykk. Kan vare fra noen timer til 1–2 uker. Begrepet brukes bredt i tysk og europeisk kraftdebatt og har ikke noe etablert norsk synonym.
 
 **Effektgap** *(residual gap)*
-Det som blir igjen av etterspørselen etter at all annen produksjon (kjernekraft, vannkraft, import, termisk backup, fleksibelt forbruk osv.) er trukket fra. Det er **denne** mangelen et batterilager må dekke — ikke total last. Måles i GW.
+Det som blir igjen av etterspørselen etter at all annen produksjon (kjernekraft, vannkraft, import, termisk reserve, fleksibelt forbruk osv.) er trukket fra. Det er **denne** mangelen et batterilager må dekke — ikke total last. Måles i GW.
 
 **Hendelsens varighet** *(event duration)*
 Antall døgn Dunkelflauten antas å vare. I hovednotebooken er standardverdien 10 døgn, valgt som et pedagogisk midtpunkt mellom korte hendelser (1–2 døgn) og forlengede vinterperioder (2–3 uker).

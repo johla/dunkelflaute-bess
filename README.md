@@ -13,7 +13,7 @@ Hvis repoet skal deles med/brukes av en fagperson, start med dette løpet:
 
 1. Les [`METODE.md`](METODE.md) først.
 2. Kjør hovednotebooken fra toppen uten å endre parametere.
-3. Endre bare **én parameter**: residual effektmangel.
+3. Endre bare **én parameter**: effektgap.
 4. Endre deretter bare **varighet**.
 5. Først etterpå: endre batterikjemi, kost og produksjonskapasitet.
 
@@ -37,7 +37,7 @@ Denne rekkefølgen er viktig. Den hindrer at diskusjonen begynner med teknologio
 Notebooken lar deg variere:
 
 - varighet på hendelsen i døgn
-- effektgap i GW etter kjernekraft, vannkraft, import, termisk backup, etterspørselsrespons osv.
+- effektgap i GW etter kjernekraft, vannkraft, import, termisk reserve, etterspørselsrespons osv.
 - utnyttbar andel av installert batterikapasitet
 - kost per kWh for pakke og ferdig installert batterilager (BESS)
 - kjemimiksen: LFP, natrium-ion og andre langtidslagringsbatterier
@@ -51,7 +51,7 @@ Dette er ikke et argument mot batterier. Batterier er svært nyttige for frekven
 
 Spørsmålet her er snevrere: **er batterier alene en rasjonell løsning for kontinental, flerdagers Dunkelflaute?**
 
-Standardverdiene peker mot svaret: sannsynligvis nei. Når hendelsen går fra timer til flere døgn, flytter problemet seg fra ordinært batterilager til strategisk energilager, fleksibilitet, overføringsnett, regulerbar produksjon, vannmagasiner, hydrogen/metan/ammoniakk, termisk backup og etterspørselsstyring.
+Standardverdiene peker mot svaret: sannsynligvis nei. Når hendelsen går fra timer til flere døgn, flytter problemet seg fra ordinært batterilager til strategisk energilager, fleksibilitet, overføringsnett, regulerbar produksjon, vannmagasiner, hydrogen/metan/ammoniakk, termisk reserve og etterspørselsstyring.
 
 ## Energi og effekt
 
@@ -95,12 +95,12 @@ endre antakelser og umiddelbart se konsekvensene. Den bruker samme
 deterministiske formler som [`src/dunkelflaute.py`](src/dunkelflaute.py).
 
 - **Designsystem:** [`docs/DESIGN.md`](docs/DESIGN.md) (Nordic Energy Explainer).
-- **Spec:** [`docs/GITHUB-PAGES.md`](docs/GITHUB-PAGES.md).
+- **Spesifikasjon:** [`docs/GITHUB-PAGES.md`](docs/GITHUB-PAGES.md).
 - **Eksport av data:** kjør `python scripts/export_site_data.py` for å
   regenerere `docs/data/site-results.json` fra `data/defaults.json` og
   `src/dunkelflaute.py`. Det gir én sannhetskilde og hindrer formelsklid
   mellom Python og JS.
-- **Lokal smoke-test:** `python -m http.server --directory docs 8000` og
+- **Lokal funksjonstest:** `python -m http.server --directory docs 8000` og
   åpne `http://localhost:8000`.
 
 For å publisere: GitHub → Settings → Pages → Source: deploy from branch,
@@ -112,7 +112,7 @@ Repoet er skrevet for å være mulig å angripe. De viktigste antakelsene ligger
 
 En nyttig faglig kritikk bør derfor helst endre én av disse:
 
-- residual effektmangel under hendelsen
+- effektgap under hendelsen
 - varighet og sannsynlighet for hendelsen
 - tilgjengelig regulerbar produksjon og fleksibilitet
 - relevant batterikost for multi-døgn lagring
@@ -188,7 +188,7 @@ De viktigste standardverdiene er hentet fra offentlige kilder og kan endres i `d
 | Effektgap | 250 GW | Modellantakelse, ikke kildeverdi |
 | Hendelsesvarighet | 10 døgn | Modellantakelse |
 | Utnyttbar batteriandel | 80 % | Drift/reserve/degradering/margin |
-| Stationary pack cost | 70 USD/kWh | BNEF 2025 |
+| Batteripakke-kostnad | 70 USD/kWh | BNEF 2025 |
 | Ferdig installert batterikostnad | 117 USD/kWh | BNEF omtalt av Energy-Storage.news |
 | EU batterilager-tilvekst 2025 | 27,1 GWh | SolarPower Europe |
 | Global cellekapasitet 2024 | >3 TWh/år | IEA |

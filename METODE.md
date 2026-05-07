@@ -12,7 +12,7 @@ Modellen er en deterministisk størrelsesorden-beregning. Den svarer på ett sp�
 
 Beregningen bygger på fire ledd som kjøres i rekkefølge:
 
-1. **Energimengde**: residual effektmangel i GW ganges med varighet i timer for å få levert energi i TWh.
+1. **Energimengde**: effektgap i GW ganges med varighet i timer for å få levert energi i TWh.
 2. **Installert kapasitet**: levert energi deles på utnyttbar andel for å ta hensyn til reserve, degradering og driftsmargin.
 3. **Kapitalbinding**: installert kapasitet ganges med kost per kWh (pakke og turnkey).
 4. **Forsyningskjede og materialer**: installert kapasitet sammenlignes med global cellekapasitet, EU-installasjonstakt og litiumforbruk.
@@ -37,7 +37,7 @@ For en fagperson eller en student som skal vurdere modellen, foreslås følgende
 
 1. Les dette notatet og [README.md](README.md) sin femminuttersversjon.
 2. Kjør [`notebooks/dunkelflaute_batteri_lab.ipynb`](notebooks/dunkelflaute_batteri_lab.ipynb) fra toppen uten å endre noe.
-3. Endre **bare residual effektmangel** og se hvordan tall flytter seg.
+3. Endre **bare effektgap** og se hvordan tall flytter seg.
 4. Endre deretter **bare varighet**.
 5. Først etter at størrelsesordenen er forstått: endre kjemimiks, kost og produksjonskapasitet.
 6. Bruk utvidelsesnotebookene i `notebooks/extensions/` for å se enkelte deltemaer nærmere.
