@@ -13,6 +13,8 @@
     "usable_fraction": 0.8,
     "stationary_pack_cost_usd_per_kwh": 70.0,
     "turnkey_bess_cost_usd_per_kwh": 117.0,
+    "power_capex_usd_per_kw": 0.0,
+    "epc_overhead_fraction": 0.0,
     "lfp_share": 0.75,
     "sodium_ion_share": 0.15,
     "other_long_duration_share": 0.1,

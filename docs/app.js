@@ -33,7 +33,10 @@ function calculateScenario(s) {
   const installedTwh = deliveredTwh / s.usable_fraction;
 
   const packCostT = (installedTwh * s.stationary_pack_cost_usd_per_kwh) / 1000;
-  const turnkeyCostT = (installedTwh * s.turnkey_bess_cost_usd_per_kwh) / 1000;
+  const energyCostT = (installedTwh * s.turnkey_bess_cost_usd_per_kwh) / 1000;
+  const powerCostT = (s.residual_gap_gw * 1e6 * s.power_capex_usd_per_kw) / 1e12;
+  const equipmentCostT = energyCostT + powerCostT;
+  const turnkeyCostT = equipmentCostT * (1 + s.epc_overhead_fraction);
 
   const lfpTwh = installedTwh * mix.lfp;
   const sodiumTwh = installedTwh * mix.sodium;
@@ -46,6 +49,8 @@ function calculateScenario(s) {
     delivered_twh: deliveredTwh,
     installed_twh: installedTwh,
     pack_cost_trillion_usd: packCostT,
+    energy_cost_trillion_usd: energyCostT,
+    power_cost_trillion_usd: powerCostT,
     turnkey_cost_trillion_usd: turnkeyCostT,
     lfp_twh: lfpTwh,
     sodium_ion_twh: sodiumTwh,
@@ -92,6 +97,8 @@ const state = {
   usable_fraction: 0.8,
   stationary_pack_cost_usd_per_kwh: 70,
   turnkey_bess_cost_usd_per_kwh: 117,
+  power_capex_usd_per_kw: 0,
+  epc_overhead_fraction: 0,
   lfp_share: 0.75,
   sodium_ion_share: 0.15,
   other_long_duration_share: 0.10,
@@ -139,6 +146,8 @@ function syncSlidersFromState() {
   $("i-days").value = state.event_days;
   $("i-usable").value = Math.round(state.usable_fraction * 100);
   $("i-cost").value = state.turnkey_bess_cost_usd_per_kwh;
+  $("i-power-capex").value = state.power_capex_usd_per_kw;
+  $("i-epc").value = Math.round(state.epc_overhead_fraction * 100);
   $("i-lfp").value = Math.round(state.lfp_share * 100);
   $("i-sodium").value = Math.round(state.sodium_ion_share * 100);
   $("i-other").value = Math.round(state.other_long_duration_share * 100);
@@ -147,6 +156,8 @@ function syncSlidersFromState() {
   setText("v-days", fmtInt(state.event_days));
   setText("v-usable", fmtInt(state.usable_fraction * 100));
   setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh * USD_TO_NOK));
+  setText("v-power-capex", fmtInt(state.power_capex_usd_per_kw * USD_TO_NOK));
+  setText("v-epc", fmtInt(state.epc_overhead_fraction * 100));
   setText("v-lfp", fmtInt(state.lfp_share * 100));
   setText("v-sodium", fmtInt(state.sodium_ion_share * 100));
   setText("v-other", fmtInt(state.other_long_duration_share * 100));
@@ -525,7 +536,9 @@ function wireSliders() {
     ["i-gap", "v-gap", (v) => { state.residual_gap_gw = +v; }, (v) => fmtInt(+v)],
     ["i-days", "v-days", (v) => { state.event_days = +v; }, (v) => fmtInt(+v)],
     ["i-usable", "v-usable", (v) => { state.usable_fraction = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * USD_TO_NOK)]
+    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * USD_TO_NOK)],
+    ["i-power-capex", "v-power-capex", (v) => { state.power_capex_usd_per_kw = +v; }, (v) => fmtInt(+v * USD_TO_NOK)],
+    ["i-epc", "v-epc", (v) => { state.epc_overhead_fraction = +v / 100; }, (v) => fmtInt(+v)]
   ];
   for (const [inputId, valueId, setter, formatter] of map) {
     const inp = $(inputId);
@@ -556,9 +569,67 @@ function wireSliders() {
   $("btn-reset").addEventListener("click", () => {
     applyDefaults();
     syncSlidersFromState();
-    markActiveScenario("base");
+    updateGapBuilderDisplay();
+    markActiveScenario("stress_250gw_10d");
     recalc();
   });
+}
+
+// ---------- Gap builder ----------
+
+const gapBuilder = {
+  gross_load_gw: 500,
+  nuclear_gw: 100,
+  hydro_gw: 30,
+  gas_backup_gw: 40,
+  imports_gw: 30,
+  demand_response_gw: 30,
+  curtailment_gw: 10,
+  existing_storage_gw: 10
+};
+
+function computeGapFromBuilder() {
+  const reductions =
+    gapBuilder.nuclear_gw +
+    gapBuilder.hydro_gw +
+    gapBuilder.gas_backup_gw +
+    gapBuilder.imports_gw +
+    gapBuilder.demand_response_gw +
+    gapBuilder.curtailment_gw +
+    gapBuilder.existing_storage_gw;
+  return Math.max(0, gapBuilder.gross_load_gw - reductions);
+}
+
+function updateGapBuilderDisplay() {
+  setText("gb-result", fmtInt(computeGapFromBuilder()));
+}
+
+function wireGapBuilder() {
+  const items = [
+    ["gb-gross", "v-gb-gross", (v) => { gapBuilder.gross_load_gw = +v; }],
+    ["gb-nuclear", "v-gb-nuclear", (v) => { gapBuilder.nuclear_gw = +v; }],
+    ["gb-hydro", "v-gb-hydro", (v) => { gapBuilder.hydro_gw = +v; }],
+    ["gb-backup", "v-gb-backup", (v) => { gapBuilder.gas_backup_gw = +v; }],
+    ["gb-imports", "v-gb-imports", (v) => { gapBuilder.imports_gw = +v; }],
+    ["gb-dr", "v-gb-dr", (v) => { gapBuilder.demand_response_gw = +v; }],
+    ["gb-curtail", "v-gb-curtail", (v) => { gapBuilder.curtailment_gw = +v; }],
+    ["gb-storage", "v-gb-storage", (v) => { gapBuilder.existing_storage_gw = +v; }]
+  ];
+  for (const [inputId, valueId, setter] of items) {
+    const inp = $(inputId);
+    if (!inp) continue;
+    inp.addEventListener("input", () => {
+      setter(inp.value);
+      setText(valueId, fmtInt(+inp.value));
+      const gap = computeGapFromBuilder();
+      state.residual_gap_gw = gap;
+      setText("gb-result", fmtInt(gap));
+      $("i-gap").value = gap;
+      setText("v-gap", fmtInt(gap));
+      markActiveScenario(null);
+      recalc();
+    });
+  }
 }
 
 function setActiveNav(sectionId) {
@@ -653,11 +724,13 @@ async function init() {
   applyDefaults();
   syncSlidersFromState();
   wireSliders();
+  wireGapBuilder();
+  updateGapBuilderDisplay();
   renderScenarioButtons();
   renderAttacks();
   renderGlossary();
   wireNavReflection();
-  markActiveScenario("base");
+  markActiveScenario("stress_250gw_10d");
   recalc();
 }
 

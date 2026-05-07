@@ -160,6 +160,83 @@
             <div class="range-meta"><span>50 GW</span><span>500 GW</span></div>
           </div>
 
+          <details class="advanced" id="gap-builder">
+            <summary>Bygg residualgapet komponent for komponent</summary>
+            <div class="advanced-body">
+              <p class="explain">Trekk tilgjengelige ressurser fra bruttolast. Hvert leirsyn kan justere sine egne tall – residualgapet oppdateres automatisk.</p>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-gross">Bruttolast under hendelse</label>
+                  <span class="value"><span id="v-gb-gross">500</span> GW</span>
+                </div>
+                <input type="range" id="gb-gross" min="200" max="800" step="10" value="500" />
+                <div class="range-meta"><span>200 GW</span><span>800 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-nuclear">Tilgjengelig kjernekraft</label>
+                  <span class="value">− <span id="v-gb-nuclear">100</span> GW</span>
+                </div>
+                <input type="range" id="gb-nuclear" min="0" max="300" step="5" value="100" />
+                <div class="range-meta"><span>0 GW</span><span>300 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-hydro">Tilgjengelig vannkraft</label>
+                  <span class="value">− <span id="v-gb-hydro">30</span> GW</span>
+                </div>
+                <input type="range" id="gb-hydro" min="0" max="150" step="5" value="30" />
+                <div class="range-meta"><span>0 GW</span><span>150 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-backup">Gass / H₂ / bio backup</label>
+                  <span class="value">− <span id="v-gb-backup">40</span> GW</span>
+                </div>
+                <input type="range" id="gb-backup" min="0" max="200" step="5" value="40" />
+                <div class="range-meta"><span>0 GW</span><span>200 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-imports">Import fra naboland</label>
+                  <span class="value">− <span id="v-gb-imports">30</span> GW</span>
+                </div>
+                <input type="range" id="gb-imports" min="0" max="150" step="5" value="30" />
+                <div class="range-meta"><span>0 GW</span><span>150 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-dr">Etterspørselsrespons</label>
+                  <span class="value">− <span id="v-gb-dr">30</span> GW</span>
+                </div>
+                <input type="range" id="gb-dr" min="0" max="100" step="5" value="30" />
+                <div class="range-meta"><span>0 GW</span><span>100 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-curtail">Industriell kurtasje</label>
+                  <span class="value">− <span id="v-gb-curtail">10</span> GW</span>
+                </div>
+                <input type="range" id="gb-curtail" min="0" max="100" step="5" value="10" />
+                <div class="range-meta"><span>0 GW</span><span>100 GW</span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="gb-storage">Eksisterende lager</label>
+                  <span class="value">− <span id="v-gb-storage">10</span> GW</span>
+                </div>
+                <input type="range" id="gb-storage" min="0" max="100" step="5" value="10" />
+                <div class="range-meta"><span>0 GW</span><span>100 GW</span></div>
+              </div>
+
+              <div class="impact-note" aria-live="polite">
+                <strong>Beregnet residualgap: <span id="gb-result">250</span> GW</strong>
+                <p class="small">Justeres automatisk i «Residual effektmangel»-slideren over.</p>
+              </div>
+            </div>
+          </details>
+
           <div class="slider-row">
             <div class="slider-head">
               <label class="name" for="i-days">Varighet</label>
@@ -192,6 +269,26 @@
                 <p class="explain" id="d-cost">Pris for ferdig installert batterisystem inkl. inverter og nettilknytning.</p>
                 <input type="range" id="i-cost" min="40" max="250" step="1" value="117" aria-describedby="d-cost cost-impact" />
                 <div class="range-meta"><span>420</span><span>2 625</span></div>
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="i-power-capex">Effektkapex</label>
+                  <span class="value"><span id="v-power-capex">0</span> NOK/kW</span>
+                </div>
+                <p class="explain" id="d-power-capex">Kostnad per kW leveringseffekt: kraftelektronikk, omformere, vern og nettilknytning.</p>
+                <input type="range" id="i-power-capex" min="0" max="200" step="5" value="0" aria-describedby="d-power-capex cost-impact" />
+                <div class="range-meta"><span>0</span><span>2 100</span></div>
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-head">
+                  <label class="name" for="i-epc">EPC-overhead</label>
+                  <span class="value"><span id="v-epc">0</span> %</span>
+                </div>
+                <p class="explain" id="d-epc">Prosjektering, tillatelser og usikkerhetspåslag på utstyrskost (EPC/contingency).</p>
+                <input type="range" id="i-epc" min="0" max="30" step="1" value="0" aria-describedby="d-epc cost-impact" />
+                <div class="range-meta"><span>0 %</span><span>30 %</span></div>
               </div>
 
               <div class="slider-row">
