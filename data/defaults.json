@@ -97,5 +97,11 @@
       "used_for": "Norsk vannkrafts magasinkapasitet, rundt 87 TWh",
       "url": "https://energifaktanorge.no/"
     }
-  ]
+  ],
+  "currency": {
+    "usd_to_nok": 10.5,
+    "label": "illustrative exchange rate",
+    "as_of": "2026-05",
+    "source": "manual assumption"
+  }
 }

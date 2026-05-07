@@ -163,7 +163,7 @@
           <details class="advanced" id="gap-builder">
             <summary>Bygg residualgapet komponent for komponent</summary>
             <div class="advanced-body">
-              <p class="explain">Trekk tilgjengelige ressurser fra bruttolast. Hvert leirsyn kan justere sine egne tall – residualgapet oppdateres automatisk.</p>
+              <p class="explain">Trekk tilgjengelige ressurser fra bruttolast. Bruk knappen under for å sende beregnet residualgap til hovedmodellen.</p>
 
               <div class="slider-row">
                 <div class="slider-head">
@@ -232,7 +232,8 @@
 
               <div class="impact-note" aria-live="polite">
                 <strong>Beregnet residualgap: <span id="gb-result">250</span> GW</strong>
-                <p class="small">Justeres automatisk i «Residual effektmangel»-slideren over.</p>
+                <p class="small">Dette er en separat beregning til du klikker «Bruk dette residualgapet».</p>
+                <button type="button" class="btn btn-secondary" id="gb-apply">Bruk dette residualgapet</button>
               </div>
             </div>
           </details>
@@ -263,30 +264,30 @@
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-cost">Turnkey BESS-kost</label>
+                  <label class="name" for="i-cost">Energi-kapex (del av turnkey-estimat)</label>
                   <span class="value"><span id="v-cost">1 228</span> NOK/kWh</span>
                 </div>
-                <p class="explain" id="d-cost">Pris for ferdig installert batterisystem inkl. inverter og nettilknytning.</p>
+                <p class="explain" id="d-cost">Energikomponent av kost (USD/kWh), brukt som base i turnkey-estimatet.</p>
                 <input type="range" id="i-cost" min="40" max="250" step="1" value="117" aria-describedby="d-cost cost-impact" />
                 <div class="range-meta"><span>420</span><span>2 625</span></div>
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-power-capex">Effektkapex</label>
+                  <label class="name" for="i-power-capex">Ekstra effektkapex (valgfri sensitivitet)</label>
                   <span class="value"><span id="v-power-capex">0</span> NOK/kW</span>
                 </div>
-                <p class="explain" id="d-power-capex">Kostnad per kW leveringseffekt: kraftelektronikk, omformere, vern og nettilknytning.</p>
+                <p class="explain" id="d-power-capex">Valgfritt tillegg utover turnkey-estimatet for ekstra effektinfrastruktur (kraftelektronikk/nett).</p>
                 <input type="range" id="i-power-capex" min="0" max="200" step="5" value="0" aria-describedby="d-power-capex cost-impact" />
                 <div class="range-meta"><span>0</span><span>2 100</span></div>
               </div>
 
               <div class="slider-row">
                 <div class="slider-head">
-                  <label class="name" for="i-epc">EPC-overhead</label>
+                  <label class="name" for="i-epc">Ekstra EPC/contingency (valgfri sensitivitet)</label>
                   <span class="value"><span id="v-epc">0</span> %</span>
                 </div>
-                <p class="explain" id="d-epc">Prosjektering, tillatelser og usikkerhetspåslag på utstyrskost (EPC/contingency).</p>
+                <p class="explain" id="d-epc">Valgfritt prosentpåslag på summen av energi- og effektkost for scenario-sensitivitet.</p>
                 <input type="range" id="i-epc" min="0" max="30" step="1" value="0" aria-describedby="d-epc cost-impact" />
                 <div class="range-meta"><span>0 %</span><span>30 %</span></div>
               </div>

@@ -4,6 +4,9 @@ Sikrer at standardscenarioet ikke utilsiktet degraderes.
 Kjør med: pytest
 """
 
+import json
+from pathlib import Path
+
 from src.dunkelflaute import BatteryScenario, calculate
 
 
@@ -48,3 +51,9 @@ def test_normalize_mix_sums_to_one():
     # Intentionally unnormalized values (3, 1, 1) to exercise the normalization logic
     r = calculate(BatteryScenario(lfp_share=3.0, sodium_ion_share=1.0, other_long_duration_share=1.0))
     assert abs(r["lfp_share_normalized"] + r["sodium_ion_share_normalized"] + r["other_long_duration_share_normalized"] - 1.0) < 1e-9
+
+
+def test_docs_defaults_contains_sources():
+    data = json.loads(Path("docs/data/defaults.json").read_text(encoding="utf-8"))
+    assert "sources" in data
+    assert len(data["sources"]) > 0

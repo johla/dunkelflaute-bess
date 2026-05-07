@@ -112,8 +112,9 @@ const MIX_KEYS = ["lfp_share", "sodium_ion_share", "other_long_duration_share"];
 const HEATMAP_GAPS = [50, 100, 150, 200, 250, 300, 400, 500];
 const HEATMAP_DAYS = [1, 3, 5, 7, 10, 14, 21];
 
-// Omregningsfaktor USD → NOK (representativ kurs)
-const USD_TO_NOK = 10.5;
+function usdToNok() {
+  return DEFAULTS?.currency?.usd_to_nok ?? 10.5;
+}
 const HEATMAP_AXIS_WIDTH = 64;
 const HEATMAP_HEADER_HEIGHT = 36;
 const HEATMAP_CELL_WIDTH = 96;
@@ -155,8 +156,8 @@ function syncSlidersFromState() {
   setText("v-gap", fmtInt(state.residual_gap_gw));
   setText("v-days", fmtInt(state.event_days));
   setText("v-usable", fmtInt(state.usable_fraction * 100));
-  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh * USD_TO_NOK));
-  setText("v-power-capex", fmtInt(state.power_capex_usd_per_kw * USD_TO_NOK));
+  setText("v-cost", fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok()));
+  setText("v-power-capex", fmtInt(state.power_capex_usd_per_kw * usdToNok()));
   setText("v-epc", fmtInt(state.epc_overhead_fraction * 100));
   setText("v-lfp", fmtInt(state.lfp_share * 100));
   setText("v-sodium", fmtInt(state.sodium_ion_share * 100));
@@ -195,15 +196,15 @@ function renderResults(r) {
     `≈ ${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)} Oslo-år`
   );
   setText("r-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)}`);
-  setText("r-oil-fund", `≈ ${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK / ANCHORS.norway_sovereign_wealth_fund_nok_trillion)} oljefond`);
+  setText("r-cost", `${fmt(r.turnkey_cost_trillion_usd * usdToNok())}`);
+  setText("r-oil-fund", `≈ ${fmt(r.turnkey_cost_trillion_usd * usdToNok() / ANCHORS.norway_sovereign_wealth_fund_nok_trillion)} oljefond`);
   setText("r-cell-years", `${fmt(r.years_of_global_cell_capacity)}`);
   setText("r-eu-mult", `${fmtInt(r.multiples_of_2025_eu_bess_additions)}×`);
   setText("r-lithium", `${fmt(r.lithium_required_million_tonnes)}`);
   setText("f-installed", `${fmt(r.installed_twh)} TWh`);
   setText("f-oslo-years", `${fmt(r.installed_twh / ANCHORS.oslo_twh_per_year_2024)}`);
   setText("f-delivered", `${fmt(r.delivered_twh)} TWh`);
-  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)} billioner NOK`);
+  setText("f-cost", `${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK`);
   setText("f-cell-years", `${fmt(r.years_of_global_cell_capacity)} år`);
   setText("f-lithium", `${fmt(r.lithium_required_million_tonnes)} Mt`);
   renderAdvancedImpacts(r);
@@ -248,7 +249,7 @@ function renderGlideMap(r) {
 function renderAdvancedImpacts(r) {
   setText(
     "cost-impact",
-    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * USD_TO_NOK)} NOK/kWh gir ${fmt(r.turnkey_cost_trillion_usd * USD_TO_NOK)} billioner NOK. Kost påvirker ikke levert eller installert TWh.`
+    `${fmtInt(state.turnkey_bess_cost_usd_per_kwh * usdToNok())} NOK/kWh (energi-kapex, del av turnkey) gir ${fmt(r.turnkey_cost_trillion_usd * usdToNok())} billioner NOK. Effektkapex og EPC er valgfrie tilleggssensitiviteter.`
   );
   setText(
     "mix-impact",
@@ -449,8 +450,8 @@ function attackMetric(a, baseline, result) {
   if (patchKeys.some((key) => key.includes("turnkey_bess_cost_usd_per_kwh"))) {
     return {
       name: "Turnkey kost",
-      before: baseline.turnkey_cost_trillion_usd * USD_TO_NOK,
-      after: result.turnkey_cost_trillion_usd * USD_TO_NOK,
+      before: baseline.turnkey_cost_trillion_usd * usdToNok(),
+      after: result.turnkey_cost_trillion_usd * usdToNok(),
       unit: "billioner NOK"
     };
   }
@@ -536,8 +537,8 @@ function wireSliders() {
     ["i-gap", "v-gap", (v) => { state.residual_gap_gw = +v; }, (v) => fmtInt(+v)],
     ["i-days", "v-days", (v) => { state.event_days = +v; }, (v) => fmtInt(+v)],
     ["i-usable", "v-usable", (v) => { state.usable_fraction = +v / 100; }, (v) => fmtInt(+v)],
-    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * USD_TO_NOK)],
-    ["i-power-capex", "v-power-capex", (v) => { state.power_capex_usd_per_kw = +v; }, (v) => fmtInt(+v * USD_TO_NOK)],
+    ["i-cost", "v-cost", (v) => { state.turnkey_bess_cost_usd_per_kwh = +v; }, (v) => fmtInt(+v * usdToNok())],
+    ["i-power-capex", "v-power-capex", (v) => { state.power_capex_usd_per_kw = +v; }, (v) => fmtInt(+v * usdToNok())],
     ["i-epc", "v-epc", (v) => { state.epc_overhead_fraction = +v / 100; }, (v) => fmtInt(+v)]
   ];
   for (const [inputId, valueId, setter, formatter] of map) {
@@ -604,6 +605,15 @@ function updateGapBuilderDisplay() {
   setText("gb-result", fmtInt(computeGapFromBuilder()));
 }
 
+function applyGapBuilderToModel() {
+  const gap = computeGapFromBuilder();
+  state.residual_gap_gw = gap;
+  $("i-gap").value = gap;
+  setText("v-gap", fmtInt(gap));
+  markActiveScenario(null);
+  recalc();
+}
+
 function wireGapBuilder() {
   const items = [
     ["gb-gross", "v-gb-gross", (v) => { gapBuilder.gross_load_gw = +v; }],
@@ -621,14 +631,13 @@ function wireGapBuilder() {
     inp.addEventListener("input", () => {
       setter(inp.value);
       setText(valueId, fmtInt(+inp.value));
-      const gap = computeGapFromBuilder();
-      state.residual_gap_gw = gap;
-      setText("gb-result", fmtInt(gap));
-      $("i-gap").value = gap;
-      setText("v-gap", fmtInt(gap));
-      markActiveScenario(null);
-      recalc();
+      updateGapBuilderDisplay();
     });
+  }
+
+  const applyBtn = $("gb-apply");
+  if (applyBtn) {
+    applyBtn.addEventListener("click", applyGapBuilderToModel);
   }
 }
 
